@@ -6,7 +6,7 @@ from myshop.models import Category, Item
 
 
 def main(request):
-    return HttpResponseRedirect(reverse("catalog:index"))
+    return render(request, "catalog/main.html")
 
 
 def index(request):

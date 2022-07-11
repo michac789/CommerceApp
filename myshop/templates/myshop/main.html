@@ -1,0 +1,24 @@
+{% extends "layout/root.html" %}
+
+{% block title %}
+
+{% endblock title %}
+
+{% block script %}
+
+{% endblock script %}
+
+{% block body %}
+    my shop TODO
+    {% if notloggedin %}
+        You are not logged in yet!
+        Please log in to sell your own items!
+    {% else %}
+        <a href="{% url 'myshop:create' %}">Sell New Item</a>
+        {% for item in items %}
+            {{ item }}
+        {% empty %}
+            no item yet...
+        {% endfor %}
+    {% endif %}
+{% endblock body %}

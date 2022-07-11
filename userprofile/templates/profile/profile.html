@@ -13,4 +13,5 @@
     {{ user.username }}
     {{ user.email }}
     {{ user.tier }}
+    <a href="{% url 'userprofile:chats' %}">All conversations</a>
 {% endblock body %}

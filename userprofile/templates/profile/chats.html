@@ -1,0 +1,21 @@
+{% extends "layout/root.html" %}
+
+{% block title %}
+
+{% endblock title %}
+
+{% block script %}
+
+{% endblock script %}
+
+{% block body %}
+    CHAT LIST PAGE - TODO
+    {% for chat in chats %}
+        <a href="{% url 'userprofile:chatcontent' chat_id=chat.id %}">
+            {{ chat.id }}
+        </a>
+        {{ chat.item }}
+    {% empty %}
+        ...empty chat
+    {% endfor %}
+{% endblock body %}

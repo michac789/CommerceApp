@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'myshop',
     'cart',
     'userprofile',
+    'api',
 ]
 
 AUTH_USER_MODEL = 'sso.User'
