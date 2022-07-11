@@ -1,0 +1,28 @@
+<html lang="en">
+    <head>
+        <title>{% block title %}{% endblock title %}</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        {% block script %}{% endblock script %}
+    </head>
+    <header>
+        <div class="container-fluid">
+            {% include "layout/navbar.html" %}
+        </div>
+    </header>
+    <body>
+        TODO - sso/templates/layout/root.html : show whether user has logged in or not ///
+        {% if user.is_authenticated %}
+            Logged in as {{ user.username }}
+        {% else %}
+            Not logged in
+        {% endif %}<br>
+        {% block body %}{% endblock body %}
+    </body>
+    <footer>
+        {% include "layout/footer.html" %}
+    </footer>
+</html>
