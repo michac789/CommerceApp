@@ -16,12 +16,12 @@
         <li class="nav-item">
             <a class="nav-link" href="{% url 'cart:main' %}">Cart</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'userprofile:profile' username=user.username %}">
-                Profile
-            </a>
-        </li>
         {% if user.is_authenticated %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'userprofile:profile' username=user.username %}">
+                    Profile
+                </a>
+            </li>
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'sso:logout' %}">Logout</a>
             </li>
