@@ -19,4 +19,22 @@
     {{ item.buyer|linebreaks }}
     {{ item.seller|linebreaks }}
     <a href="{% url 'catalog:index' %}">Back to catalog list</a>
+
+    <div class="container">
+        {% if status.creator %}
+            You are the creator.
+            Edit Button - TODO
+            <a href="{% url 'myshop:edit' item_id=item.id %}">
+                Edit
+            </a>
+        {% else %}
+            Chat Seller Button - TODO
+        {% endif %}
+        <br>
+        {% if status.sold %}
+            Item sold out!
+        {% else %}
+            Add Cart Button - TODO
+        {% endif %}
+    </div>
 {% endblock body %}
