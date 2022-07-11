@@ -1,0 +1,22 @@
+{% extends "layout/root.html" %}
+
+{% block title %}
+
+{% endblock title %}
+
+{% block script %}
+
+{% endblock script %}
+
+{% block body %}
+    CATALOG SPECIFIC PAGE - TODO
+    {{ item|linebreaks }}
+    {{ item.title|linebreaks }}
+    {{ item.description|linebreaks }}
+    {{ item.price|linebreaks }}
+    {{ item.category|linebreaks }}
+    {{ item.time_created|linebreaks }}
+    {{ item.buyer|linebreaks }}
+    {{ item.seller|linebreaks }}
+    <a href="{% url 'catalog:index' %}">Back to catalog list</a>
+{% endblock body %}

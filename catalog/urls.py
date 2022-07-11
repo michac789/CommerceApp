@@ -3,5 +3,7 @@ from . import views
 
 app_name = "catalog"
 urlpatterns = [
-    path("index", views.index, name="index"),
+    path("", views.main, name="main"),
+    path("catalog", views.index, name="index"),
+    path("catalog/<int:item_id>", views.item, name="item"),
 ]

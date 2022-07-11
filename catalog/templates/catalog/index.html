@@ -10,4 +10,30 @@
 
 {% block body %}
     CATALOG INDEX PAGE - TODO
+    <ol>
+        {% for item in items %}
+            <li>
+                <a href="{% url 'catalog:item' item_id=item.id %}">See item</a>
+                <ul>
+                    <li>Title: {{ item.title }}</li>
+                    <li>Description: {{ item.description }}</li>
+                    <li>Price: {{ item.price }}</li>
+                    <li>Category: {{ item.category }}</li>
+                    <li>Time created: {{ item.time_created }}</li>
+                    <li>Seller: <a href="{% url 'userprofile:profile' username=item.seller.username %}">
+                        {{ item.seller }}
+                    </a></li>
+                    {% if item.buyer %}
+                        <li>Buyer: <a href="{% url 'userprofile:profile' username=item.seller.username %}">
+                            {{ item.buyer }}
+                        </a></li>
+                    {% else %}                    
+                        <li>The item is NOT sold yet.</li>
+                    {% endif %}
+                </ul>
+            </li>
+        {% empty %}
+            no item...
+        {% endfor %}
+    </ol>
 {% endblock body %}
