@@ -3,8 +3,9 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 
-from .forms import ItemForm
-from .models import Item
+from .decorators import seller_required
+from .forms import ItemForm, SellerRegistrationForm
+from .models import Item, Seller
 
 
 def main(request):
@@ -27,10 +28,33 @@ def main(request):
     return render(request, "myshop/main.html", {
         "items": items,
         "notloggedin": False,
+        "notseller": not hasattr(request.user, 'seller'),
     })
 
 
 @login_required(login_url="sso:login")
+def register(request):
+    # 'post' method: register new seller from existing user
+    if request.method == "POST":
+        form = SellerRegistrationForm(request.POST)
+        if form.is_valid():
+            Seller.objects.create(
+                user = request.user,
+                location = form.cleaned_data["location"],
+            )
+            return HttpResponseRedirect(reverse("myshop:main"))
+        else: return render(request, "myshop/register.html", {
+                "form": form,
+            })
+    
+    # 'get' method: load empty form
+    else: return render(request, "myshop/register.html", {
+            "form": SellerRegistrationForm(),
+        })
+
+
+@login_required(login_url="sso:login")
+@seller_required
 def create(request):
     # 'post' method: create new item and save to database
     if request.method == "POST":
@@ -60,6 +84,7 @@ def create(request):
 
 
 @login_required(login_url="sso:login")
+@seller_required
 def edit(request, item_id):
     # ensure that the item id is valid
     try:

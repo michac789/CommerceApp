@@ -1,8 +1,8 @@
-from django.http import Http404, HttpResponseRedirect
+from django.http import Http404
+from django.db.models import Q
 from django.shortcuts import render
-from django.urls import reverse
 
-from myshop.models import Category, Item
+from myshop.models import Item
 
 
 def main(request):
@@ -10,16 +10,33 @@ def main(request):
 
 
 def index(request):
+    items = ""
+
+    # query parameter category filter
+    # ex: ?category=EL_HI means filter items that has those 2 category codes
+    if "category" in request.GET:
+        items = Item.get_with_category_codes(request.GET["category"].split('_'))
     
+    # query parameter price filter
+    # ex: ?price=10-30 means filter all items with price between 10 until 30 dollars
+    if "price" in request.GET:
+        range = request.GET["price"].split('-')
+        items = (Item.objects.filter(Q(price__gte=range[0]) & Q(price__lte=range[1]))
+                 if items == "" else
+                 items.filter(Q(price__gte=range[0]) & Q(price__lte=range[1])))
+    
+    # TODO - filter time
     if "filter" in request.GET:
-        filter = request.GET["filter"]
-        print(filter) # custom filter feature TODO
+        filter = request.GET["filter"].split('-')
+        print(filter)
+    
+    # TODO - sort feature
     if "sort" in request.GET:
         sort = request.GET["sort"]
         print(sort) # custom sort feature TODO
 
     return render(request, "catalog/index.html", {
-        "items": Item.objects.all(),
+        "items": (items if items != "" else Item.objects.all()),
     })
 
 
@@ -34,4 +51,5 @@ def item(request, item_id):
     return render(request, "catalog/item.html", {
         "item": item,
         "status": item.getstatus(request.user),
+        "notloggedin": request.user.is_anonymous
     })

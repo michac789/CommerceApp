@@ -1,11 +1,28 @@
 from django.db import models
 from sso.models import User
+from django.core.serializers import serialize
+from json import loads
+
+
+class Seller(models.Model):
+    id = models.AutoField(primary_key=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="seller")
+    location = models.CharField(max_length=128)
+    joined_time = models.DateTimeField(auto_now=True)
+    # other fields - TODO
+    
+    def __str__(self) -> str:
+        return f"<seller: {self.user.username}>"
 
 
 class Category(models.Model):
     id = models.AutoField(primary_key=True)
     category = models.CharField(max_length=32, blank=False, null=False)
+    code = models.CharField(max_length=2, verbose_name="category_code", unique=True, default="")
     symbol = models.ImageField(blank=True)
+    
+    class Meta:
+        verbose_name_plural = ("Categories")
     
     def __str__(self):
         return self.category
@@ -42,6 +59,13 @@ class Item(models.Model):
     
     class Meta:
         order_with_respect_to = 'ordereditem'
+    
+    @classmethod
+    def get_with_category_codes(self, codes):
+        args, q = [], models.Q()
+        for code in codes: args.append(Category.objects.get(code=code).id)
+        for arg in args: q |= models.Q(category = arg)
+        return self.objects.filter(q)
         
     def __str__(self):
         return f"<Item ID {self.id}: {self.title}>"
@@ -63,3 +87,6 @@ class Item(models.Model):
             "price": self.price,
             "category": self.category,
         }
+        
+    def serialize(self):
+        return loads(serialize('json', [self,]))
