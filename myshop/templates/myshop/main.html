@@ -1,0 +1,32 @@
+{% extends "layout/root.html" %}
+
+{% block title %}
+
+{% endblock title %}
+
+{% block script %}
+
+{% endblock script %}
+
+{% block body %}
+    my shop TODO
+    {% if notloggedin %}
+        You are not logged in yet!
+        Please log in to sell your own items!
+    {% else %}
+        <a href="{% url 'myshop:create' %}">Sell New Item</a><br>
+        {% for item in items %}
+            <a href="{% url 'catalog:item' item_id=item.id %}">
+                {{ item }}
+            </a><br>
+        {% empty %}
+            no item yet...
+        {% endfor %}
+        <div class="container">
+            <div class="alert alert-info">
+                Try to add query parameter: ?status=sold, ?status=onsale, ?status=all;
+                TODO - create different views for those
+            </div>
+        </div>
+    {% endif %}
+{% endblock body %}

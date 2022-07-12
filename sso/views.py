@@ -4,7 +4,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.http import HttpResponseRedirect
 from django.db import IntegrityError
 
-from .models import User
+from .models import User, AdminPost
 
 
 def register_view(request):
@@ -85,4 +85,7 @@ def logout_view(request):
 
 
 def tc(request):
-    return render(request, "sso/t&c.html")
+    # render terms and conditions page
+    return render(request, "sso/t&c.html", {
+        "post": AdminPost.objects.get(id=1).serialize()
+    })

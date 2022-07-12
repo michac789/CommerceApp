@@ -1,23 +1,35 @@
 from django.db import models
 from sso.models import User
+from myshop.models import Item
 
 
-# class ItemOrdered(models.Model):
-#     id = models.AutoField(primary_key=True)
+# class ChatManager(models.Manager):
+#     def retrieve_chat(self):
+#         return "TODO"
     
-class CommentTemplate(models.Model):
+#     def getchats_user(self, user_id):
+#         return self.filter(buyer=user_id)
+
+
+class Chat(models.Model):
     id = models.AutoField(primary_key=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    message = models.CharField(max_length=256, blank=False, null=False)
-    time = models.DateTimeField(auto_now=True)
+    item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name="chat")
+    buyer = models.ForeignKey(User, on_delete=models.CASCADE, related_name="buyer_chat")
     
-    class Meta:
-        abstract = True
+    # objects = ChatManager()
+    
+    @classmethod
+    def retrieve_chats(self, id):
+        return Chat.objects.get(id=id).contents.all().order_by("time")
 
 
-class Comment(CommentTemplate):
-    pass
+class ChatContent(models.Model):
+    id = models.AutoField(primary_key=True)
+    content = models.CharField(max_length=256, blank=False, default="")
+    sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name="chats")
+    chat = models.ForeignKey(Chat, on_delete=models.CASCADE, related_name="contents")
+    time = models.DateTimeField(auto_now=True)
 
 
-class Reply(CommentTemplate):
-    comment = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name="replies")
+class ItemOrdered(models.Model):
+    id = models.AutoField(primary_key=True)

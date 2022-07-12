@@ -6,7 +6,7 @@ from myshop.models import Category, Item
 
 
 def main(request):
-    return HttpResponseRedirect(reverse("catalog:index"))
+    return render(request, "catalog/main.html")
 
 
 def index(request):
@@ -24,10 +24,14 @@ def index(request):
 
 
 def item(request, item_id):
+    # ensure that the item id is valid
     try:
         item = Item.objects.get(id = item_id)
     except Item.DoesNotExist:
         return Http404("Invalid item id!")
+    
+    # render page and pass these info: item query, status.creator, status.sold
     return render(request, "catalog/item.html", {
         "item": item,
+        "status": item.getstatus(request.user),
     })

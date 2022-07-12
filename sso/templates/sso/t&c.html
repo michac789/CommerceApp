@@ -9,6 +9,12 @@
 {% endblock script %}
 
 {% block body %}
-    TERMS AND CONDITIONS TODO
-    bla bla bla...
+    <div class="container">
+        <div class="h2">
+            <u>
+                {{ post.title }}
+            </u>
+        </div>
+        {{ post.markdown|safe }}
+    </div>
 {% endblock body %}
