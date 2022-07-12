@@ -29,6 +29,9 @@ class AdminPost(models.Model):
     markdown = NonStrippingTextField()
     time_created = models.DateTimeField(auto_now=True)
     
+    class Meta:
+        verbose_name_plural = ("Admin Posts")
+    
     def __str__(self):
         return f"<Admin Post ID {self.id}: {self.title}>"
     

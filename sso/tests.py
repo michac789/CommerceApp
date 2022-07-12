@@ -1,12 +1,10 @@
-from django.test import RequestFactory, TestCase
-from django.test import Client, TestCase
+from django.test import RequestFactory, TestCase, Client
 from django.urls import reverse
 from django.contrib.auth import get_user
 
 from .models import User, AdminPost
 
 
-# Create your tests here.
 class SSOTesting(TestCase):
     
     # create mock user

@@ -21,16 +21,22 @@
     <a href="{% url 'catalog:index' %}">Back to catalog list</a>
 
     <div class="container">
-        {% if status.creator %}
-            You are the creator.
-            Edit Button - TODO
-            <a href="{% url 'myshop:edit' item_id=item.id %}">
-                Edit
-            </a>
+        {% if notloggedin %}
+            <div class="alert alert-warning">
+                Please log in to add item to your cart or chat seller!
+            </div>
         {% else %}
-            Chat Seller Button - TODO
+            {% if status.creator %}
+                You are the creator.
+                Edit Button - TODO
+                <a href="{% url 'myshop:edit' item_id=item.id %}">
+                    Edit
+                </a>
+            {% else %}
+                Chat Seller Button - TODO
+            {% endif %}
+            <br>
         {% endif %}
-        <br>
         {% if status.sold %}
             Item sold out!
         {% else %}
