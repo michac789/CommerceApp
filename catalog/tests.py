@@ -4,9 +4,8 @@ from myshop.models import Category, Item
 from sso.models import User
 
 
-class CatalogTestingIndex(TestCase):
-    
-    # creating mock database (users, categories, items)
+class BaseTestSample(TestCase):
+
     def setUp(self):
         self.user1 = User.objects.create_user(
             username="user1", email="user1@gmail.com", password="123",
@@ -37,6 +36,12 @@ class CatalogTestingIndex(TestCase):
             title="t5", description="", price=50,
             category=self.c2, seller=self.user2,
         )
+
+
+class CatalogTestingIndex(BaseTestSample):
+    
+    def setUp(self):
+        super().setUp()
     
     def test_index_all(self):
         c = Client()

@@ -19,18 +19,18 @@ def bookmark(request, item_id):
     # 'GET': retrieve all bookmarked items
     if request.method == "GET":
         bookmarks = Bookmark.objects.filter(user = request.user)
-        return JsonResponse([bm.serialize() for bm in bookmarks], safe = False)
+        return JsonResponse([bm.serialize() for bm in bookmarks], safe = False, status = 200)
     
     # make sure item_id is valid for 'PUT' and 'DELETE' method
     if not Item.objects.filter(id = item_id).exists():
-        return JsonResponse({ "error": "Invalid item ID!" })
+        return JsonResponse({ "error": "Invalid item ID!" }, status = 404)
     
     # 'PUT': create new bookmark item if not yet created
     elif request.method == "PUT":
         Bookmark.objects.get_or_create(
             user = request.user, item = Item.objects.get(id = item_id),
         )
-        return JsonResponse({ "message": "added bookmark" })
+        return JsonResponse({ "message": "added bookmark" }, status = 200)
     
     # 'DELETE' delete bookmark item if exist
     elif request.method == "DELETE":
@@ -38,10 +38,10 @@ def bookmark(request, item_id):
                 user = request.user, item = Item.objects.get(id = item_id),
             ).delete()
         except Bookmark.DoesNotExist: pass
-        return JsonResponse({ "message": "removed bookmark" })
+        return JsonResponse({ "message": "removed bookmark" }, status = 200)
     
     # return error for other request methods
-    else: return JsonResponse({ "error": "Invalid request method!"} )
+    else: return JsonResponse({ "error": "Invalid request method!"}, status = 405)
 
 
 @csrf_exempt
@@ -51,11 +51,11 @@ def addcart(request, item_id):
     # 'GET': retrieve all items on cart
     if request.method == "GET":
         cart_items = Cart.objects.filter(user = request.user)
-        return JsonResponse([cart.serialize() for cart in cart_items], safe = False)
+        return JsonResponse([cart.serialize() for cart in cart_items], safe = False, status = 200)
     
     # make sure item_id is valid for 'PUT' and 'DELETE' method
     if not Item.objects.filter(id = item_id).exists():
-        return JsonResponse({ "error": "Invalid item ID!" })
+        return JsonResponse({ "error": "Invalid item ID!" }, status = 404)
     
     # 'PUT': create new cart item if not yet created
     elif request.method == "PUT":
@@ -64,8 +64,8 @@ def addcart(request, item_id):
         )
         # you cannot add your own item on sale or add closed item
         except Exception as e:
-            return JsonResponse({ "error": e.args[0] })
-        return JsonResponse({ "message": "added to cart" })
+            return JsonResponse({ "error": e.args[0] }, status = 400)
+        return JsonResponse({ "message": "added to cart" }, status = 200)
     
     # 'DELETE' delete bookmark item if exist
     elif request.method == "DELETE":
@@ -73,7 +73,7 @@ def addcart(request, item_id):
                 user = request.user, item = Item.objects.get(id = item_id),
             ).delete()
         except Cart.DoesNotExist: pass
-        return JsonResponse({ "message": "removed from cart" })
+        return JsonResponse({ "message": "removed from cart" }, status = 200)
     
     # return error for other request methods
-    else: return JsonResponse({ "error": "Invalid request method!"} )
+    else: return JsonResponse({ "error": "Invalid request method!"}, status = 405)
