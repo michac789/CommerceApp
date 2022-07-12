@@ -12,8 +12,13 @@
     my shop TODO
     {% if notloggedin %}
         You are not logged in yet!
-        Please log in to sell your own items!
+        Please log in and register as seller to sell your own items!
+    {% elif notseller %}
+        Please register as a seller first!
+        Register
+        <a href="{% url 'myshop:register' %}">here</a>
     {% else %}
+        You have been registered as a seller!
         <a href="{% url 'myshop:create' %}">Sell New Item</a><br>
         {% for item in items %}
             <a href="{% url 'catalog:item' item_id=item.id %}">

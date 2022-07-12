@@ -1,5 +1,18 @@
 from django.db import models
 from sso.models import User
+from django.core.serializers import serialize
+from json import loads
+
+
+class Seller(models.Model):
+    id = models.AutoField(primary_key=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="seller")
+    location = models.CharField(max_length=128)
+    joined_time = models.DateTimeField(auto_now=True)
+    # other fields - TODO
+    
+    def __str__(self) -> str:
+        return f"<seller: {self.user.username}>"
 
 
 class Category(models.Model):
@@ -74,3 +87,6 @@ class Item(models.Model):
             "price": self.price,
             "category": self.category,
         }
+        
+    def serialize(self):
+        return loads(serialize('json', [self,]))
