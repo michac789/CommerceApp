@@ -66,6 +66,13 @@ class Item(models.Model):
         for code in codes: args.append(Category.objects.get(code=code).id)
         for arg in args: q |= models.Q(category = arg)
         return self.objects.filter(q)
+    
+    @classmethod
+    def buy(self, item_id, user):
+        item = Item.objects.get(id = item_id)
+        item.closed = True
+        item.buyer = user
+        item.save()
         
     def __str__(self):
         return f"<Item ID {self.id}: {self.title}>"
