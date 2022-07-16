@@ -1,20 +1,34 @@
 {% extends "layout/root.html" %}
-
-{% block title %}
-
-{% endblock title %}
-
-{% block script %}
-
-{% endblock script %}
+{% load static %}
+<link href="{% static 'sso/login.css' %}" rel="stylesheet">
 
 {% block body %}
-    TODO - sso/templates/sso/login.html
-    <form action="{% url 'sso:login' %}" method="POST">
-        {% csrf_token %}
-        username: <input type="text" name="username" id="">
-        password: <input type="password" name="password" id="">
-        <button type="submit">login</button>
-    </form>
+    <!-- TODO NEED TO BE CENTERED AND UNIFORMED -->
+    <div class="container-fluid" id="login-container">
+        <div class="row justify-content-center align-items-center">
+            <div class="card col-4" style="
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"> 
+            <!-- Need to be moved to local css -->
+                <h5 class="card-header bg-white">Login <i class="bi bi-box-arrow-in-right"></i></h5>
+                    <div class="card-body">
+                        <form action="{% url 'sso:login' %}" method="POST">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="formControlName" class="form-label">Username: </label>
+                                <input name="username" type="text" class="form-control" id="formControlName">
+                            </div>
+                            <div class="mb-3">
+                                <label for="formControlPassword" class="form-label">Password: </label>
+                                <input name="password" type="password" class="form-control" id="formControlPassword">
+                            </div> 
+                            <p>Do not have one? <a class="text-primary" href="{% url 'sso:register' %}">Register now!</a></p>
+                            <button class="btn btn-secondary" type="submit">Login</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     {{ error }}
 {% endblock body %}

@@ -12,3 +12,4 @@ cart/migrations/__pycache__
 userprofile/__pycache__
 userprofile/migrations/__pycache__
 api/__pycache__
+db.sqlite3
