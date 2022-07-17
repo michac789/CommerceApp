@@ -1,5 +1,6 @@
 from django.http import Http404
 from django.db.models import Q
+from django.core.exceptions import FieldError
 from django.shortcuts import render
 
 from myshop.models import Item
@@ -30,11 +31,13 @@ def index(request):
     if "filter" in request.GET:
         filter = request.GET["filter"].split('-')
         print(filter)
+    # TODO - search feature
     
-    # TODO - sort feature
+    # sort feature (price / time_created / title), either ascending or descending
     if "sort" in request.GET:
-        sort = request.GET["sort"]
-        print(sort) # custom sort feature TODO
+        try: items = (Item.sort(request.GET["sort"]) if items == "" else
+                      Item.sort(request.GET["sort"], items))
+        except FieldError: pass
     
     # pagination feature
     # ex: ?num=5&page=1 means paginate 5 per page, open page 1
