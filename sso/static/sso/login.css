@@ -1,6 +1,10 @@
 #login-container { 
-    height: 100vh;
+    height: 95vh;
     align-items: center; 
     justify-content: center; 
     padding-top: 20vh;
+}
+
+.card  { 
+    z-index: -1 !important;
 }

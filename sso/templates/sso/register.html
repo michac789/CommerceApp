@@ -9,7 +9,6 @@
 {% endblock script %}
 
 {% block body %}
-    <link href="{% static 'sso/register.css' %}" rel="stylesheet">
     <!--
         TODO
         - frontend check for password confirmation does not exist yet currently or it is not the same 
@@ -72,9 +71,10 @@
             </div>
         {% endif %}
     </div> -->
+    <link href="{% static 'sso/register.css' %}" rel="stylesheet">
     <div class="container-fluid" id="register-container">
         <div class="row justify-content-center align-items-center">
-            <div class="card col-5" style="
+            <div class="card col-9 col-sm-7 col-md-6 col-lg-5" style="
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"> 
             <!-- Need to be moved to local css -->
                 <h5 class="card-header bg-white">Register <i class="bi bi-pencil-square"></i></h5>
