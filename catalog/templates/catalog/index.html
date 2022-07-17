@@ -10,12 +10,23 @@
 {% endblock script %}
 
 {% block body %}
-    CATALOG INDEX PAGE - TODO
+    CATALOG INDEX PAGE - TODO 
+    <link rel="stylesheet" href="{% static 'catalog/index.css' %}">
     <img src="https://www.google.com/imgres?imgurl=https%3A%2F%2Fwww.fortytwo.sg%2Fmedia%2Fcatalog%2Fproduct%2Fcache%2F1%2Fimage%2F600x680%2F040ec09b1e35df139433887a97daa66f%2Ft%2Fr%2Ftravisoak1.jpg&imgrefurl=https%3A%2F%2Fwww.fortytwo.sg%2Ftravis-study-desk.html&tbnid=ewt7V4QaveU4oM&vet=12ahUKEwisjYG06vD4AhUCgtgFHc2dAXkQMygBegUIARCnAw..i&docid=hZZ2ilFVoekCoM&w=500&h=550&q=study%20desk&ved=2ahUKEwisjYG06vD4AhUCgtgFHc2dAXkQMygBegUIARCnAw" alt="abc">
     <img src="https://www.google.com/imgres?imgurl=https%3A%2F%2Fwww.fortytwo.sg%2Fmedia%2Fcatalog%2Fproduct%2Fcache%2F1%2Fimage%2F600x680%2F040ec09b1e35df139433887a97daa66f%2Ft%2Fr%2Ftravisoak1.jpg&imgrefurl=https%3A%2F%2Fwww.fortytwo.sg%2Ftravis-study-desk.html&tbnid=ewt7V4QaveU4oM&vet=12ahUKEwisjYG06vD4AhUCgtgFHc2dAXkQMygBegUIARCnAw..i&docid=hZZ2ilFVoekCoM&w=500&h=550&q=study%20desk&ved=2ahUKEwisjYG06vD4AhUCgtgFHc2dAXkQMygBegUIARCnAw" alt="">
     <ol>
         {% for item in items %}
             <li>
+                <div class="card" style="width: 18rem;">
+                    <img src="{{ item.image }}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                </div>
+            
+            
                 <a href="{% url 'catalog:item' item_id=item.id %}">See item</a>
                 <ul>
                     <img src="{{ item.image }}" alt="abc" style="height:100px;">
@@ -39,5 +50,5 @@
         {% empty %}
             no item...
         {% endfor %}
-    </ol>
+    </ol>    
 {% endblock body %}
