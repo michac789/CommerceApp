@@ -2,11 +2,7 @@
     height: 100vh;
     align-items: center; 
     justify-content: center;  
-    padding-top: 15vh;
-}
-
-
-
-.card  { 
+    padding-top: 20vh;
     z-index: -1 !important;
 }
+

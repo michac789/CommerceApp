@@ -1,7 +1,7 @@
 {% load static %}
 <link href="{% static 'sso/navbar.css' %}" rel="stylesheet">
-
-<nav id="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark px-4 position-fixed vw-100">
+<!-- TODO: NEED TO REMOVE INLINE STYLE WITH Z-INDEX:99999 -->
+<nav id="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark px-4 position-fixed vw-100" style="z-index: 99999;">
     <div class="container-fluid">
         <a class="navbar-brand d-none d-lg-inline lead" href="{% url 'catalog:main' %}">S H O P A H O L I C</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
