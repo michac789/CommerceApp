@@ -1,7 +1,7 @@
 {% load static %}
 <link href="{% static 'sso/navbar.css' %}" rel="stylesheet">
 
-<nav id="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark px-4">
+<nav id="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark px-4 position-fixed vw-100">
     <div class="container-fluid">
         <a class="navbar-brand d-none d-lg-inline lead" href="{% url 'catalog:main' %}">S H O P A H O L I C</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -46,7 +46,7 @@
             </ul>
         </div>
         <!-- Outside of collapse -->
-        <div class="d-lg-none d-flex flex-direction-row position-fixed top-0 end-0 mt-2 me-2">
+        <div class="d-lg-none d-flex flex-direction-row top-0 end-0 mt-1 me-1">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMobile" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <span><i class="bi bi-person-fill"></i></span>
             </a>
