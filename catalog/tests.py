@@ -48,9 +48,9 @@ class CatalogTestingIndex(BaseTestSample):
         response = c.get("/catalog")
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "catalog/index.html")
-        self.assertEqual(list(response.context["items"]),
+        self.assertEqual(list(response.context["pagination"].object_list),
                          [self.i1, self.i2, self.i3, self.i4, self.i5])
-        self.assertQuerysetEqual(response.context["items"], Item.objects.all(),
+        self.assertQuerysetEqual(response.context["pagination"], Item.objects.all(),
                                  transform=lambda _: _)
         
     def test_index_filter_category_1(self):
@@ -59,7 +59,7 @@ class CatalogTestingIndex(BaseTestSample):
             'category': 'C1',
         })
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(list(response.context["items"]),
+        self.assertEqual(list(response.context["pagination"].object_list),
                          [self.i1, self.i2, self.i4])
         
     def test_index_filter_category_2(self):
@@ -68,7 +68,7 @@ class CatalogTestingIndex(BaseTestSample):
             'category': 'C3_C2',
         })
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(list(response.context["items"]),
+        self.assertEqual(list(response.context["pagination"].object_list),
                          [self.i3, self.i5])
         
     def test_index_filter_category_3(self):
@@ -77,7 +77,7 @@ class CatalogTestingIndex(BaseTestSample):
             'category': 'C1_C2',
         })
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(list(response.context["items"]),
+        self.assertEqual(list(response.context["pagination"].object_list),
                          [self.i1, self.i2, self.i3, self.i4, self.i5])
         
     def test_index_filter_category_4(self):
@@ -86,7 +86,7 @@ class CatalogTestingIndex(BaseTestSample):
             'category': 'C3',
         })
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(list(response.context["items"]), [])
+        self.assertEqual(list(response.context["pagination"].object_list), [])
         
     def test_index_filter_price_1(self):
         c = Client()
@@ -94,7 +94,7 @@ class CatalogTestingIndex(BaseTestSample):
             'price': '10-99999',
         })
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(list(response.context["items"]),
+        self.assertEqual(list(response.context["pagination"].object_list),
                          [self.i1, self.i3, self.i4, self.i5])
         
     def test_index_filter_price_2(self):
@@ -103,7 +103,7 @@ class CatalogTestingIndex(BaseTestSample):
             'price': '0-12.99',
         })
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(list(response.context["items"]),
+        self.assertEqual(list(response.context["pagination"].object_list),
                          [self.i1, self.i2])
         
     def test_index_filter_price_3(self):
@@ -112,7 +112,7 @@ class CatalogTestingIndex(BaseTestSample):
             'price': '10-20',
         })
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(list(response.context["items"]),
+        self.assertEqual(list(response.context["pagination"].object_list),
                          [self.i1, self.i4])
         
     def test_index_filter_price_4(self):
@@ -121,7 +121,7 @@ class CatalogTestingIndex(BaseTestSample):
             'price': '13-15',
         })
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(list(response.context["items"]), [])
+        self.assertEqual(list(response.context["pagination"].object_list), [])
         
     def test_index_filter_category_price_1(self):
         c = Client()
@@ -130,7 +130,7 @@ class CatalogTestingIndex(BaseTestSample):
             'price': '15-20'
         })
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(list(response.context["items"]),
+        self.assertEqual(list(response.context["pagination"].object_list),
                          [self.i4])
         
     def test_index_filter_category_price_2(self):
@@ -140,7 +140,7 @@ class CatalogTestingIndex(BaseTestSample):
             'price': '10-40',
         })
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(list(response.context["items"]),
+        self.assertEqual(list(response.context["pagination"].object_list),
                          [self.i3])
         
     def test_index_filter_category_price_3(self):
@@ -150,4 +150,56 @@ class CatalogTestingIndex(BaseTestSample):
             'price': '1-25',
         })
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(list(response.context["items"]), [])
+        self.assertEqual(list(response.context["pagination"].object_list), [])
+
+    def test_index_pagination_1(self):
+        c = Client()
+        response = c.get("/catalog", {
+            'num': '2',
+            'page': '2',
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(list(response.context["pagination"].object_list),
+                         [self.i3, self.i4])
+    
+    def test_index_pagination_2(self):
+        c = Client()
+        response = c.get("/catalog", {
+            'num': '4',
+            'page': '1',
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(list(response.context["pagination"].object_list),
+                         [self.i1, self.i2, self.i3, self.i4])
+        
+    def test_index_pagination_3(self):
+        c = Client()
+        response = c.get("/catalog", {
+            'num': '4',
+            'page': '100',
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(list(response.context["pagination"].object_list),
+                         [self.i5,])
+        
+    def test_index_pagination_4(self):
+        c = Client()
+        response = c.get("/catalog", {
+            'num': '1',
+            'page': '-1',
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(list(response.context["pagination"].object_list),
+                         [self.i1,])
+        
+    def test_index_pagination_5(self):
+        c = Client()
+        response = c.get("/catalog", {
+            'category': 'C1_C2',
+            'price': '12-25',
+            'num': '2',
+            'page': '2',
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(list(response.context["pagination"].object_list),
+                         [self.i4])

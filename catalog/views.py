@@ -3,6 +3,7 @@ from django.db.models import Q
 from django.shortcuts import render
 
 from myshop.models import Item
+from . import util
 
 
 def main(request):
@@ -34,9 +35,14 @@ def index(request):
     if "sort" in request.GET:
         sort = request.GET["sort"]
         print(sort) # custom sort feature TODO
-
+    
+    # pagination feature
+    # ex: ?num=5&page=1 means paginate 5 per page, open page 1
     return render(request, "catalog/index.html", {
-        "items": (items if items != "" else Item.objects.all()),
+        "pagination": util.paginate(
+            request, (util.getcount(items) if items != "" else
+                      util.getcount(Item.objects.all()))
+        ),
     })
 
 
