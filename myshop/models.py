@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models.functions import Lower
+from django.core.validators import MinValueValidator
 from sso.models import User
 from django.core.serializers import serialize
 from json import loads
@@ -46,7 +47,7 @@ class Item(models.Model):
     title = models.CharField(max_length=64)
     description = models.CharField(max_length=256)
     image = models.CharField(max_length=128, null=True)
-    price = models.DecimalField(max_digits=8, decimal_places=2, default=0, blank=False)
+    price = models.DecimalField(max_digits=8, decimal_places=2, default=0, blank=False, validators=[MinValueValidator(0)])
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="items")
     time = models.DateTimeField(auto_now=True)
     seller = models.ForeignKey(User, on_delete=models.CASCADE, related_name="items_sold")
