@@ -1,5 +1,4 @@
 from django.test import TestCase, Client
-from tests import *
 
 from myshop.models import Category, Item
 from sso.models import User
@@ -30,7 +29,7 @@ class BaseTestSample(TestCase):
             category=self.c2, seller=self.user1,
         )
         self.i4 = Item.objects.create(
-            title="ad", description="", price=19.4,
+            title="adab", description="", price=19.4,
             category=self.c1, seller=self.user2,
         )
         self.i5 = Item.objects.create(

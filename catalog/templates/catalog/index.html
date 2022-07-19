@@ -24,7 +24,7 @@
                     <li>Description: {{ item.description }}</li>
                     <li>Price: {{ item.price }}</li>
                     <li>Category: {{ item.category }}</li>
-                    <li>Time created: {{ item.time_created }}</li>
+                    <li>Time created: {{ item.time }}</li>
                     <li>Seller: <a href="{% url 'userprofile:profile' username=item.seller.username %}">
                         {{ item.seller }}
                     </a></li>

@@ -1,4 +1,5 @@
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from myshop.models import Item
 
 
 # function to create dynamic pagination
@@ -25,3 +26,14 @@ def getcount(posts, start=1):
         newpost = post
         newpost.count = i + start
     return posts
+
+
+# search all that match a particular query
+def search(request, items=Item.objects.all()):
+    queries = request.GET.get('search', None).split(' ')
+    search_results = []
+    for query in queries:
+        for item in items:
+            if query.upper() in item.title.upper() and item.id not in search_results:
+                search_results.append(item.id)
+    return Item.objects.filter(id__in = search_results)
