@@ -1,4 +1,6 @@
 from django.db import models
+from django.db.models.functions import Lower
+from django.core.validators import MinValueValidator
 from sso.models import User
 from django.core.serializers import serialize
 from json import loads
@@ -45,9 +47,9 @@ class Item(models.Model):
     title = models.CharField(max_length=64)
     description = models.CharField(max_length=256)
     image = models.CharField(max_length=128, null=True)
-    price = models.DecimalField(max_digits=8, decimal_places=2, default=0, blank=False)
+    price = models.DecimalField(max_digits=8, decimal_places=2, default=0, blank=False, validators=[MinValueValidator(0)])
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="items")
-    time_created = models.DateTimeField(auto_now=True)
+    time = models.DateTimeField(auto_now=True)
     seller = models.ForeignKey(User, on_delete=models.CASCADE, related_name="items_sold")
     buyer = models.ForeignKey(User, on_delete=models.CASCADE, related_name="items_bought", blank=True, null=True, default=None)
     ordereditem = models.ForeignKey("catalog.ItemOrdered", on_delete=models.PROTECT, editable=False, blank=True, null=True)
@@ -66,6 +68,13 @@ class Item(models.Model):
         for code in codes: args.append(Category.objects.get(code=code).id)
         for arg in args: q |= models.Q(category = arg)
         return self.objects.filter(q)
+    
+    @classmethod
+    def sort(self, sortkey, items=None):
+        queryset = (self.objects if items == None else items)
+        return (queryset.order_by(Lower(sortkey[3:]))
+            if sortkey[0:3] == "asc" else
+            queryset.order_by(Lower(sortkey[3:]).desc()))
     
     @classmethod
     def buy(self, item_id, user):
