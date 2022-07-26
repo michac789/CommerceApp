@@ -1,12 +1,12 @@
 {% extends "layout/root.html" %}
 {% load static %}
-<link href="{% static 'sso/login.css' %}" rel="stylesheet">
 
 {% block body %}
+    <link href="{% static 'sso/login.css' %}" rel="stylesheet">
     <!-- TODO NEED TO BE CENTERED AND UNIFORMED -->
     <div class="container-fluid" id="login-container">
         <div class="row justify-content-center align-items-center">
-            <div class="card col-4" style="
+            <div class="card col-8 col-sm-6 col-md-5 col-lg-4" style="
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);"> 
             <!-- Need to be moved to local css -->
                 <h5 class="card-header bg-white">Login <i class="bi bi-box-arrow-in-right"></i></h5>
