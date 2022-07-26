@@ -1,0 +1,11 @@
+version: '3.8'
+services:
+  django:
+    build: .
+    image: django:commerceapp
+    container_name: commerceapp_container
+    volumes:
+      - .:/django
+    ports:
+      - 9000:9000
+    command: python manage.py runserver 0.0.0.0:9000
