@@ -80,7 +80,7 @@ class SSOTesting(TestCase):
         response = c.get('/sso/register')
         self.assertRedirects(response, reverse("catalog:index"), status_code=302)
         
-    # # register post case1: email cannot be empty 
+    # register post case1: email cannot be empty 
     def test_register_post_case1(self):
         c = Client()
         response = c.post("/sso/register", {"username": "user456", "email": "",})
@@ -106,7 +106,7 @@ class SSOTesting(TestCase):
         self.assertIsInstance(response.context["error"], str)
     
     # register post case4: username already taken
-    def test_register_post_case5(self):
+    def test_register_post_case4(self):
         c = Client()
         response = c.post("/sso/register", {"username": "user123", "email": "user456@gmail.com",
                                             "password": "fs7&3kdfs903.", "confirmation": "fs7&3kdfs903."})
@@ -115,13 +115,22 @@ class SSOTesting(TestCase):
         self.assertIsInstance(response.context["error"], str)
         
     # register post case5: all fields filled, not clashing with existing username, hard password
-    def test_register_post_case6(self):
+    def test_register_post_case5(self):
         c = Client()
         response = c.post("/sso/register", {"username": "user456", "email": "user456@gmail.com",
                                             "password": "fs7&3kdfs903.", "confirmation": "fs7&3kdfs903."})
         user = get_user(c)
         self.assertFalse(user.is_anonymous)
         self.assertRedirects(response, reverse("catalog:index"), status_code=302)
+
+    # register post case6: reject if password is too simple
+    def test_register_post_case6(self):
+        c = Client()
+        response = c.post("/sso/register", {"username": "user456", "email": "user456@gmail.com",
+                                            "password": "12345", "confirmation": "12345"})
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "sso/register.html")
+        self.assertIsInstance(response.context["error"], str)
     
     # terms and conditions: renders t&c page
     def test_tc_view(self):

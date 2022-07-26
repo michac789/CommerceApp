@@ -2,7 +2,7 @@ from django.test import Client
 
 from myshop.models import Item
 from cart.models import Bookmark, Cart
-from catalog.tests import BaseTestSample
+from catalog.tests.test_basesample import BaseTestSample
 
 
 class APIBookmarkTest(BaseTestSample):
