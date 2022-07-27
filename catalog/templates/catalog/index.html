@@ -16,16 +16,17 @@
         <ol>
             {% for item in items %}
                 <li>
-                    <a href="{% url 'catalog:item' item_id=item.id %}">
+                    <a href="{% url 'catalog:item' item_id=item.id %}"> 
                         <div class="card" style="width: 18rem; border: none;">
                             <div class="d-flex justify-content-center"> 
-                            <img src="{{ item.image }}" class="card-img-top img-fluid" style="width: 17rem;" alt="...">
-                            </div>
-                            <div class="card-body">
-                            <h1 class="lead fw-100">S$ {{ item.price }}</h1>
-                            <hr>
-                            <h5 class="card-title">{{ item.title }}</h5>
-                            <small>Condition: second</small>
+                                <img src="{{ item.image }}" class="card-img-top img-fluid" style="width: 17rem;" alt="...">
+                                </div>
+                                <div class="card-body">
+                                <h1 class="lead fw-100">S$ {{ item.price }}</h1>
+                                <hr>
+                                <h5 class="card-title">{{ item.title }}</h5>
+                                <small>Condition: second
+                                </small>
                             </div>
                         </div>
                     </a>
