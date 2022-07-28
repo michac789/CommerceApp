@@ -1,10 +1,14 @@
+# personal venv or text editor configurations
 venv
 .vscode
+
+# pycache files from all modules
 commerceapp/__pycache__
 sso/__pycache__
 sso/migrations/__pycache__
 catalog/__pycache__
 catalog/migrations/__pycache__
+catalog/tests/__pycache__
 myshop/__pycache__
 myshop/migrations/__pycache__
 cart/__pycache__

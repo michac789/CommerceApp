@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import Http404
 
 from sso.models import User
-from catalog.models import Chat, ChatContent
+from .models import Chat, ChatContent
 
 
 def profile(request, username):

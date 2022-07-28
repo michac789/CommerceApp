@@ -32,8 +32,20 @@
                     </a>
             {% empty %}
                 no item...
-            {% endfor %}
-            
+            {% endfor %}  
         </div>
+    {% comment %}
+        <div class="container">
+            <span class="h1">PAGINATION TODO</span><br>
+            <span class="h3">Try: ?num=4&#38;page=2 means:</span><br>
+            <span class="h3">paginate 4 per page, go to page 2</span><br>
+            <span class="h3">If you don't specify num, by default it's 10 per page</span><br>
+            <span class="h3">You may need these information for frontend pagination:</span><br>
+            Current Page: {{ pagination.number }} <br>
+            Total Pages: {{ pagination.paginator.num_pages }} <br>
+            Next Page: {{ pagination.has_next }} -> this is true if there is still next page <br>
+            Prev Page: {{ pagination.has_previous }} -> this is true if there is still prev page <br>
+        </div>
+    {% endcomment %}
     </div>
 {% endblock body %}

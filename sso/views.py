@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.urls import reverse
 from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.password_validation import validate_password
+from django.forms import ValidationError
 from django.http import HttpResponseRedirect
 from django.db import IntegrityError
 
@@ -36,6 +38,15 @@ def register_view(request):
         except IntegrityError:
             return render(request, "sso/register.html", {
                 "error": "Error! Username has been taken, please choose another username!",
+                "username": username, "email": email,
+            })
+            
+        # ensure password is not too simple
+        try:
+            validate_password(password)
+        except ValidationError:
+            return render(request, "sso/register.html", {
+                "error": "Error! Password too simple, please pick a stronger password!",
                 "username": username, "email": email,
             })
             
