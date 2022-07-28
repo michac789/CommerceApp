@@ -17,9 +17,11 @@ a:hover {
 
 div.catalog-container { 
     display: flex; 
+    flex-wrap: wrap;
     justify-content: center; 
     align-items: center;
-    margin-top: 10vh;
+    margin-top: 10vh; 
+    column-gap: 10px;
 }
 
 
@@ -27,4 +29,15 @@ div.catalog-container {
 div.catalog-container li { 
     width: 30vw;
     margin: 2.5vw 0;
+}
+
+div.card { 
+    width: max(20vw, 200px); 
+    margin: 20px 0; 
+} 
+
+
+div.card.img { 
+    width: max(18vw, 190px);
+    height: auto; 
 }
