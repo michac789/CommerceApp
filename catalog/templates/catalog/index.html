@@ -12,50 +12,28 @@
     <script src="{% static 'catalog/index.js' %}" type="module"></script>
     <!-- CATALOG INDEX PAGE - TODO  -->
     <link rel="stylesheet" href="{% static 'catalog/index.css' %}">
-    <div class="catalog-container">
-        <ol>
-            {% for item in pagination.object_list %}
-                <li>
-                    <a href="{% url 'catalog:item' item_id=item.id %}">
-                        <div class="card" style="width: 18rem; border: none;">
-                            <div class="d-flex justify-content-center"> 
-                            <img src="{{ item.image }}" class="card-img-top img-fluid" style="width: 17rem;" alt="...">
+    <div class="container-fluid">
+        <div class="catalog-container">
+            {% for item in items %}
+                    <a href="{% url 'catalog:item' item_id=item.id %}"> 
+                        <div class="card"> 
+                            <div>
+                                <img src="{{ item.image }}" class="card-img-top" alt="product-photo"> 
                             </div>
+                            <!-- alt need to be outputted dynamically (using image name perhaps)  -->
                             <div class="card-body">
-                            <h1 class="lead fw-100">S$ {{ item.price }}</h1>
-                            <hr>
-                            <h5 class="card-title">{{ item.title }}</h5>
-                            <small>Condition: second</small>
+                                <h1 class="lead fw-100">S$ {{ item.price }}</h1>
+                                <hr>
+                                <h5 class="card-title">{{ item.title }}</h5>
+                                <small>Condition: second
+                                </small>
                             </div>
                         </div>
                     </a>
-                
-                
-                    
-                    <!-- <ul>
-                        <a href="{% url 'catalog:item' item_id=item.id %}">See item</a>
-                        <img src="{{ item.image }}" alt="abc" style="width: 17rem;">
-                        <li>Title: {{ item.title }}</li>
-                        <li>Description: {{ item.description }}</li>
-                        <li>Price: {{ item.price }}</li>
-                        <li>Category: {{ item.category }}</li>
-                        <li>Time created: {{ item.time_created }}</li>
-                        <li>Seller: <a href="{% url 'userprofile:profile' username=item.seller.username %}">
-                            {{ item.seller }}
-                        </a></li>
-                        {% if item.buyer %}
-                            <li>Buyer: <a href="{% url 'userprofile:profile' username=item.seller.username %}">
-                                {{ item.buyer }}
-                            </a></li>
-                        {% else %}                    
-                            <li>The item is NOT sold yet.</li>
-                        {% endif %}
-                    </ul> -->
-                </li>
             {% empty %}
                 no item...
-            {% endfor %}
-        </ol>    
+            {% endfor %}  
+        </div>
     {% comment %}
         <div class="container">
             <span class="h1">PAGINATION TODO</span><br>

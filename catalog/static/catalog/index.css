@@ -1,0 +1,50 @@
+ol, ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+a:hover { 
+    text-decoration: none;
+    color: black;
+}
+
+
+
+div.catalog-container { 
+    display: flex; 
+    flex-wrap: wrap;
+    justify-content: center; 
+    align-items: center;
+    margin-top: 10vh; 
+    column-gap: 10px;
+}
+
+
+
+div.catalog-container li { 
+    width: 30vw;
+    margin: 2.5vw 0;
+}
+
+div.card { 
+    width: max(20vw, 250px); 
+    margin: 20px 0; 
+} 
+
+
+div.card img { 
+    width: 90%;
+    height: max(220px, 20vw);  
+    border: none;
+    /* needs to be changed / deleted so that it uses the original size that are uniformed from backend
+    For now it's for the purpose of making it neat */
+}
+
+div.card div {
+    text-align: center;
+}
