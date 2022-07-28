@@ -17,7 +17,9 @@
             {% for item in items %}
                     <a href="{% url 'catalog:item' item_id=item.id %}"> 
                         <div class="card"> 
-                            <img src="{{ item.image }}" class="card-img-top" alt="product-photo"> 
+                            <div>
+                                <img src="{{ item.image }}" class="card-img-top" alt="product-photo"> 
+                            </div>
                             <!-- alt need to be outputted dynamically (using image name perhaps)  -->
                             <div class="card-body">
                                 <h1 class="lead fw-100">S$ {{ item.price }}</h1>

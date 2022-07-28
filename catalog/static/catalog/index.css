@@ -37,7 +37,13 @@ div.card {
 } 
 
 
-div.card.img { 
-    width: max(18vw, 190px);
-    height: auto; 
+div.card img { 
+    width: 90%;
+    height: 180px; 
+    /* needs to be changed / deleted so that it uses the original size that are uniformed from backend
+    For now it's for the purpose of making it neat */
+}
+
+div.card div {
+    text-align: center;
 }
