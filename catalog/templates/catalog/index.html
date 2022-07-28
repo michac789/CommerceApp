@@ -6,15 +6,16 @@
 {% endblock title %}
 
 {% block script %}
+    <script src="{% static 'catalog/index.js' %}" type="module"></script>
+
 {% endblock script %}
 
 {% block body %}
-    <script src="{% static 'catalog/index.js' %}" type="module"></script>
     <!-- CATALOG INDEX PAGE - TODO  -->
     <link rel="stylesheet" href="{% static 'catalog/index.css' %}">
     <div class="container-fluid">
         <div class="catalog-container">
-            {% for item in items %}
+            {% for item in pagination.object_list %}
                     <a href="{% url 'catalog:item' item_id=item.id %}"> 
                         <div class="card"> 
                             <div>
