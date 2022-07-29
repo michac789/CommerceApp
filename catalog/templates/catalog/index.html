@@ -25,7 +25,12 @@
                             <div class="card-body">
                                 <h1 class="lead fw-100">S$ {{ item.price }}</h1>
                                 <hr>
-                                <h5 class="card-title">{{ item.title }}</h5>
+                                <h5 class="card-title d-flex align-items-center justify-content-center">
+                                    {{ item.title }}
+                                    <button class="btn bookmark-btn bookmark-{{ item.id }}" data-item-id="{{ item.id }}">
+                                        <i class="bi bi-bookmark"></i> 
+                                    </button>
+                                </h5> 
                                 <!-- <small> Condition:  
                                 </small> -->
                             </div>

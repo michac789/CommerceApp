@@ -15,5 +15,17 @@ document.addEventListener('DOMContentLoaded', () => {
         )
 
     )
+    
 
+    document.querySelectorAll('.bookmark-btn')
+        .forEach(button => {
+            button.addEventListener('click', () => {
+                const itemID = button.dataset.itemId
+                const bookmarkReference = document.querySelector('bookmark-${itemID} i')
+                console.log(bookmarkReference)
+            } 
+            )
+            console.log(button)
+
+        })
 })
