@@ -1,19 +1,21 @@
 {% extends "layout/root.html" %}
+{% load static %}
 
 {% block title %}
 
 {% endblock title %}
 
 {% block script %}
+    <script src="{% static 'catalog/item.js' %}" type="module"></script>
 
 {% endblock script %}
 
 {% block body %} 
     <div style="margin-top: 70px;"></div>
-    <div style="width: 30vw;" class="m-auto">
+    <div style="width: max(30vw, 200px);" class="m-auto">
         <img class="img-fluid" src={{ item.image }} alt="product-photo">
     </div>
-    <div class="container border">
+    <div class="container border item-container">
         <!-- CATALOG SPECIFIC PAGE - TODO --> 
         <h1 class="d-flex align-items-center">
             {{ item.title }} 
@@ -41,7 +43,7 @@
                 </a>
             {% else %}
                 <!-- Contact Seller Button - TODO -->
-                <button class="btn btn-secondary my-3">
+                <button class="btn btn-secondary my-3 contact-btn">
                     Contact seller
                     <i class="bi bi-chat"></i>
                 </button>
@@ -51,11 +53,14 @@
             <p class="error lead">Item sold out</p>
         {% else %}
             <!-- Add Cart Button --> 
-            <button class="btn btn-secondary my-3">
+            <button class="btn btn-secondary my-3 add-cart-btn">
                 Add to cart
                 <i class="bi bi-cart4"></i>
             </button>
         {% endif %}
-       
-    </div>
+    </div> 
+    
+
+
+    
 {% endblock body %}
