@@ -26,15 +26,19 @@
                                 <h1 class="lead fw-100">S$ {{ item.price }}</h1>
                                 <hr>
                                 <h5 class="card-title">{{ item.title }}</h5>
-                                <small>Condition: second
-                                </small>
+                                <!-- <small> Condition:  
+                                </small> -->
                             </div>
                         </div>
                     </a>
             {% empty %}
                 no item...
             {% endfor %}  
+
         </div>
+        <!-- for scrolling through -->
+        <div style="height: 100px;"></div>
+
     {% comment %}
         <div class="container">
             <span class="h1">PAGINATION TODO</span><br>
