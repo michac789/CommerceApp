@@ -5,17 +5,21 @@
 {% endblock title %}
 
 {% block script %}
-
+    <script src="{% static 'userprofile/profile.js' %}" type="module"></script>
 {% endblock script %}
 
 {% block body %}
     <link href="{% static 'userprofile/profile.css' %}" rel="stylesheet">
     <div style="margin-top: 70px;"></div>
-    <div  class="avatar bg-secondary rounded-circle d-flex align-items-center justify-content-center">
-        <span class="avatar-text" class="">A</span>
+    <div class="d-flex align-items-center justify-content-center">
+        <div  class="avatar bg-secondary rounded-circle d-flex align-items-center justify-content-center d-inline-block">
+            <span data-name="{{ user.username }}" class="avatar-text" class=""></span>
+        </div>
     </div>
-    {{ user.username }}
-    {{ user.email }}
-    {{ user.tier }}
-    <a href="{% url 'userprofile:chats' %}">All conversations</a>
+    <div class="container my-4 px-5 py-5 border text-center">
+    <h4 class="mb-4 text-muted">Name: {{ user.username }}</h4>
+    <h4 class="mb-4 text-muted">Email: {{ user.email }}</h4>
+    <!-- {{ user.tier }}  Tier needs to be clarified (using badges or what?)-->
+    <a href="{% url 'userprofile:chats' %}" class="btn btn-secondary">Your message <i class="bi bi-chat-dots"></i></a>
+    </div>
 {% endblock body %}
