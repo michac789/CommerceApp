@@ -15,14 +15,12 @@ document.addEventListener('DOMContentLoaded', () => {
     )
 
     // To fetch the initial state of bookmarking 
-    
-    document.querySelectorAll('.bookmark-btn')
-        .forEach(button => {
-            const itemID = button.dataset.itemId 
-            fetch('api/bookmark/1')
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data)
+    fetch('api/bookmark/1')
+        .then(response => response.json())
+        .then(data => {
+            document.querySelectorAll('.bookmark-btn')
+                .forEach(button => {
+                    const itemID = button.dataset.itemId 
                     if (data.length == 0){
                         button.innerHTML = '<i class="bi bi-bookmark"></i>'
                     }
@@ -39,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 )
             })
-        
+    
 
 
     // For toggling function in bookmark-btn 
