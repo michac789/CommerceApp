@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     fetch('/api/cart/1')
         .then(response => response.json())
         .then(data => {
+            console.log(data)
             if(data.length == 0) { 
                 itemCounterWrapperReference.innerHTML += 
                     '<p class="lead fw-300 pt-5">Your cart is empty...</p>'  
