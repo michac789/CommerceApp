@@ -1,6 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Hover for the frame
     let cards = document.querySelectorAll(".card");
+    // initializing
+    cards.forEach(card =>  
+        card.style.border = "hidden"
+    )
     cards.forEach(card =>  
         card.addEventListener("mouseover", () => 
             card.style.border = null
