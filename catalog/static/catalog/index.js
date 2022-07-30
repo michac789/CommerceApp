@@ -22,16 +22,18 @@ document.addEventListener('DOMContentLoaded', () => {
             fetch('api/bookmark/1')
                 .then(response => response.json())
                 .then(data => {
+                    console.log(data)
                     if (data.length == 0){
                         button.innerHTML = '<i class="bi bi-bookmark"></i>'
                     }
                     else { 
-                        const arrayOfID = data.map(element => element.id)
+                        // NEED TO BE CONVERTED TO STRING FOR ARRAY OF ID! CAUTION SINCE DATA IS RECEIVED IN STRING DATATYPE
+                        const arrayOfID = data.map(element => JSON.stringify(element.item_id))
                         if (arrayOfID.includes(itemID)) {
                             button.innerHTML = '<i class="bi bi-bookmark-fill"></i>'
                         }
                         else { 
-                            button.innertHTML = '<i class="bi bi-bookmark"></i>'
+                            button.innerHTML = '<i class="bi bi-bookmark"></i>'
                         }
                     }
                     }
@@ -49,15 +51,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 const bookmarkReference = document.querySelector(`.bookmark-${itemID} i`)
                 if ( bookmarkReference.classList.contains('bi-bookmark-fill') ){ 
                     button.innerHTML = '<i class="bi bi-bookmark"></i>'
-                    fetch(`api/bookmark/${itemID}`, {METHOD: 'DELETE'})
+                    fetch(`api/bookmark/${itemID}`, {method: 'DELETE'})
                         .then(response => response.json())
-                        .then(data => console.log(data))
+                        .then(data => {return})
                 }
                 else { 
                     button.innerHTML = '<i class="bi bi-bookmark-fill"></i>'
-                    fetch(`api/bookmark/${itemID}`, {METHOD: 'PUT'})
+                    fetch(`api/bookmark/${itemID}`, {method: 'PUT'})
                         .then(response => response.json())
-                        .then(data => console.log(data))
+                        .then(data => {return})
                 }
             } 
             )
