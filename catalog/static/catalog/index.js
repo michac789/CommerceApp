@@ -23,9 +23,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 const itemID = button.dataset.itemId
                 const bookmarkReference = document.querySelector('bookmark-${itemID} i')
                 console.log(bookmarkReference)
+                // TODO
             } 
             )
-            console.log(button)
 
         })
 })
