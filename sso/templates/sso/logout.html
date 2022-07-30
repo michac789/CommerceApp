@@ -1,15 +1,21 @@
 {% extends "layout/root.html" %}
+{% load static %}
 
 {% block title %}
 
 {% endblock title %}
 
 {% block script %}
+    <script src="{% static 'sso/logout.js' %}" type="module"></script>
 
 {% endblock script %}
 
 {% block body %}
-    TODO - sso/templates/sso/logout.html
-    You have been logged out.
-    (redirect to catalog or HERO)
+    <link href="{% static 'sso/logout.css' %}" rel="stylesheet">
+
+    <div style="height: 56px;"></div>
+    <div class="container logout-container text-center d-flex align-items-center justify-content-center flex-column">
+        <h1>You have been logged out.</h1>
+        <small class="lead">See you again.</small>
+    </div>
 {% endblock body %}
