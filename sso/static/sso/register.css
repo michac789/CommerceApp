@@ -1,5 +1,5 @@
 .register-container { 
-    height: 100vh;
+    height: calc(100vh - 56px);
     align-items: center; 
     justify-content: center;  
     padding-top: 20vh;
