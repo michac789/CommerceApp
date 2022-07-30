@@ -1,3 +1,7 @@
 a { 
     text-decoration: none; 
 }
+
+.cart-container { 
+    min-width: 250px;
+}

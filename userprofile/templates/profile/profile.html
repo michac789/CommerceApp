@@ -1,5 +1,5 @@
 {% extends "layout/root.html" %}
-
+{% load static %}
 {% block title %}
 
 {% endblock title %}
@@ -9,7 +9,11 @@
 {% endblock script %}
 
 {% block body %}
+    <link href="{% static 'userprofile/profile.css' %}" rel="stylesheet">
     <div style="margin-top: 70px;"></div>
+    <div  class="avatar bg-secondary rounded-circle d-flex align-items-center justify-content-center">
+        <span class="avatar-text" class="">A</span>
+    </div>
     {{ user.username }}
     {{ user.email }}
     {{ user.tier }}

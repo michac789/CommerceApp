@@ -11,8 +11,9 @@
 {% endblock script %}
 
 {% block body %} 
+    <link rel="stylesheet" href="{% static 'catalog/item.css' %}">
     <div style="margin-top: 70px;"></div>
-    <div style="width: max(30vw, 200px);" class="m-auto">
+    <div class="item-image" class="m-auto">
         <img class="img-fluid" src={{ item.image }} alt="product-photo">
     </div>
     <div class="container border item-container">
