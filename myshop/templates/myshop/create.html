@@ -10,12 +10,12 @@
 {% endblock script %}
 
 {% block body %}
-    create TODO
+    <!-- create TODO
     <form action="{% url 'myshop:create' %}" method="POST">
         {% csrf_token %}
         {{ form }}
         <input type="submit" value="submit">
-    </form>
+    </form> -->
 
     <!-- register as seller TODO -->
     <link rel="stylesheet" href="{% static 'myshop/register.css' %}">
@@ -28,23 +28,36 @@
                         <form action="{% url 'myshop:create' %}" method="POST">
                             {% csrf_token %}
                             <div class="mb-3">
-                                <label for="formControlLocation" class="form-label">Title: </label>
-                                <input name="location" type="text" class="form-control" id="formControlLocation">
+                                <label for="formControlTitle" class="form-label">Title: </label>
+                                <input name="title" type="text" class="form-control" id="formControlTitle" required>
                             </div>
                             <div class="mb-3">
-                                <label for="formControlLocation" class="form-label">Description: </label>
-                                <textarea name="location" type="text" class="form-control" id="formControlLocation"></textarea>
+                                <label for="formControlDescription" class="form-label">Description: </label>
+                                <textarea name="description" type="text" class="form-control" id="formControlDescription" required></textarea>
                             </div>
                             <div class="mb-3">
                                 <!-- Tentatively using link -->
-                                <label for="formControlLocation" class="form-label">Image link: </label>
-                                <input name="location" type="text" class="form-control" id="formControlLocation">
+                                <label for="formControlImage" class="form-label">Image link: </label>
+                                <input name="image" type="text" class="form-control" id="formControlImage" required>
                             </div>
                             <div class="mb-3">
-                                <label for="formControlLocation" class="form-label">Price: (in $)</label>
-                                <input name="location" type="number" class="form-control" id="formControlLocation">
+                                <label for="formControlPrice" class="form-label">Price: (in $)</label>
+                                <input name="price" type="number" class="form-control" id="formControlPrice" required>
                             </div>
-
+                            <div class="dropdown">
+                                <label for="dropdownMenuButton" class="mb-2">Category: </label>
+                                <button class="btn btn-outline-secondary dropdown-toggle btn-sm mb-2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Select a category here
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                  <a class="dropdown-item" href="#">Household</a>
+                                  <a class="dropdown-item" href="#">Electronics</a>
+                                  <a class="dropdown-item" href="#">Sports</a>
+                                  <a class="dropdown-item" href="#">Education</a>
+                                  <a class="dropdown-item" href="#">Clothing</a>
+                                  <a class="dropdown-item" href="#">Others</a>
+                                </div>
+                            </div>
                             <input class="btn btn-secondary mt-1 btn-sm" type="submit" value="Submit">
                         </form>
                     </div>

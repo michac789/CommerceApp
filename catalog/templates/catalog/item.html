@@ -36,11 +36,14 @@
             </div>
         {% else %}
             {% if status.creator %}
-                You are the creator.
-                Edit Button - TODO
-                <a href="{% url 'myshop:edit' item_id=item.id %}">
-                    Edit
+            <div class="alert alert-warning container my-3">
+                You are the seller of this item. You can edit the details.
+            </div>
+            
+                <a class="btn btn-secondary" href="{% url 'myshop:edit' item_id=item.id %}">
+                    Edit<i class="ms-2 bi bi-pen"></i>
                 </a>
+         
             {% else %}
                 <!-- Contact Seller Button - TODO -->
                 <button class="btn btn-secondary my-3 contact-btn">

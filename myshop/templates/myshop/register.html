@@ -15,8 +15,7 @@
     <div class="container register-seller-container">
         <div class="row justify-content-center align-items-center">
             <div class="card col-9 col-sm-8 col-md-7 col-lg-6" > 
-            <!-- Need to be moved to local css -->
-                <h5 class="card-header bg-white">Register as seller <i class="bi bi-box-arrow-in-right"></i></h5>
+                <h5 class="card-header bg-white">Register as seller <i class="ms-2 bi bi-pen"></i></h5>
                     <div class="card-body">
                         <form action="{% url 'myshop:register' %}" method="POST">
                             {% csrf_token %}
