@@ -1,4 +1,5 @@
 {% extends "layout/root.html" %}
+{% load static %}
 
 {% block title %}
 
@@ -15,4 +16,40 @@
         {{ form }}
         <input type="submit" value="submit">
     </form>
+
+    <!-- register as seller TODO -->
+    <link rel="stylesheet" href="{% static 'myshop/register.css' %}">
+    <div class="container register-seller-container">
+        <div class="row justify-content-center align-items-center">
+            <div class="card col-9 col-sm-8 col-md-7 col-lg-6" > 
+            <!-- Need to be moved to local css -->
+                <h5 class="card-header bg-white">Create your item <i class="bi bi-wallet2"></i></h5>
+                    <div class="card-body">
+                        <form action="{% url 'myshop:create' %}" method="POST">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="formControlLocation" class="form-label">Title: </label>
+                                <input name="location" type="text" class="form-control" id="formControlLocation">
+                            </div>
+                            <div class="mb-3">
+                                <label for="formControlLocation" class="form-label">Description: </label>
+                                <textarea name="location" type="text" class="form-control" id="formControlLocation"></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <!-- Tentatively using link -->
+                                <label for="formControlLocation" class="form-label">Image link: </label>
+                                <input name="location" type="text" class="form-control" id="formControlLocation">
+                            </div>
+                            <div class="mb-3">
+                                <label for="formControlLocation" class="form-label">Price: (in $)</label>
+                                <input name="location" type="number" class="form-control" id="formControlLocation">
+                            </div>
+
+                            <input class="btn btn-secondary mt-1 btn-sm" type="submit" value="Submit">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock body %}
