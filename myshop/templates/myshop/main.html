@@ -9,16 +9,19 @@
 {% endblock script %}
 
 {% block body %}
-    my shop TODO
+    <!-- my shop TODO -->
     <div style="height: 56px;"></div>
+    <div class="container text-center">
     {% if notloggedin %}
-        You are not logged in yet!
-        Please log in and register as seller to sell your own items!
+        <h3>Please log in first if you want to sell your own item(s)!</h3>
+
     {% elif notseller %}
-        Please register as a seller first!
-        Register
-        <a href="{% url 'myshop:register' %}">here</a>
+        <h3>Please register as a seller first!</h3>
+        <a href="{% url 'myshop:register' %}" class="btn btn-secondary">Register</a>
+        
+      
     {% else %}
+        <div></div>
         You have been registered as a seller!
         <a href="{% url 'myshop:create' %}">Sell New Item</a><br>
         {% for item in items %}
@@ -35,4 +38,5 @@
             </div>
         </div> -->
     {% endif %}
+    </div>
 {% endblock body %}
