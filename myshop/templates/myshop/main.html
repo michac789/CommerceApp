@@ -9,29 +9,36 @@
 {% endblock script %}
 
 {% block body %}
-    my shop TODO
+    <!-- my shop TODO -->
+    <div style="height: 56px;"></div>
+    <div class="container text-center">
     {% if notloggedin %}
-        You are not logged in yet!
-        Please log in and register as seller to sell your own items!
+        <h3>Please log in first if you want to sell your own item(s)!</h3>
+
     {% elif notseller %}
-        Please register as a seller first!
-        Register
-        <a href="{% url 'myshop:register' %}">here</a>
+        <h3>Please register as a seller first!</h3>
+        <a href="{% url 'myshop:register' %}" class="btn btn-secondary">Register</a>
+        
+      
     {% else %}
-        You have been registered as a seller!
-        <a href="{% url 'myshop:create' %}">Sell New Item</a><br>
+        <h3>You have been registered as a seller!</h3>
+        <a href="{% url 'myshop:create' %}" class="btn btn-secondary mt-3">Sell new item!</a> 
+
+        <div style="height: 20px;"></div>
+        <br>
         {% for item in items %}
             <a href="{% url 'catalog:item' item_id=item.id %}">
                 {{ item }}
             </a><br>
         {% empty %}
-            no item yet...
+            <h4 class="text-muted">No item yet :(</h4>
         {% endfor %}
-        <div class="container">
+        <!-- <div class="container">
             <div class="alert alert-info">
                 Try to add query parameter: ?status=sold, ?status=onsale, ?status=all;
                 TODO - create different views for those
             </div>
-        </div>
+        </div> -->
     {% endif %}
+    </div>
 {% endblock body %}

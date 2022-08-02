@@ -6,15 +6,16 @@
 {% endblock title %}
 
 {% block script %}
+    <script src="{% static 'catalog/index.js' %}" type="module"></script>
+
 {% endblock script %}
 
 {% block body %}
-    <script src="{% static 'catalog/index.js' %}" type="module"></script>
     <!-- CATALOG INDEX PAGE - TODO  -->
     <link rel="stylesheet" href="{% static 'catalog/index.css' %}">
     <div class="container-fluid">
         <div class="catalog-container">
-            {% for item in items %}
+            {% for item in pagination.object_list %}
                     <a href="{% url 'catalog:item' item_id=item.id %}"> 
                         <div class="card"> 
                             <div>
@@ -24,16 +25,23 @@
                             <div class="card-body">
                                 <h1 class="lead fw-100">S$ {{ item.price }}</h1>
                                 <hr>
-                                <h5 class="card-title">{{ item.title }}</h5>
-                                <small>Condition: second
-                                </small>
+                                <h5 class="card-title d-flex align-items-center justify-content-center">
+                                    {{ item.title }}
+                                    <button class="btn bookmark-btn bookmark-{{ item.id }}" data-item-id="{{ item.id }}">
+                                        <!-- Placeholder for bookmark icon -->
+                                    </button>
+                                </h5> 
+                                <!-- <small> Condition:  
+                                </small> -->
                             </div>
                         </div>
                     </a>
             {% empty %}
                 no item...
             {% endfor %}  
+
         </div>
+        
     {% comment %}
         <div class="container">
             <span class="h1">PAGINATION TODO</span><br>

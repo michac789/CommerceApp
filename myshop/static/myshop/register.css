@@ -1,0 +1,4 @@
+.register-seller-container { 
+    height: calc(100vh - 59px);
+    padding-top: 10vh;
+}

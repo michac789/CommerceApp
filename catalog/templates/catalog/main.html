@@ -1,4 +1,5 @@
 {% extends "layout/root.html" %}
+{% load static %}
 
 {% block title %}
 
@@ -9,5 +10,21 @@
 {% endblock script %}
 
 {% block body %}
-    MAIN - TODO
+    <link rel="stylesheet" href="{% static 'catalog/main.css' %}">
+    <div class="container hero d-flex justify-content-center align-items-center">
+        <div class="row text-center text-lg-start d-flex align-items-center justify-content-center">
+            <div class="col-12 col-lg-7 d-flex justify-content-center flex-column align-items-center">
+                <h2 class="fs-1">S H O P A H O L I C </h2>
+                <small class="lead">cheap. easy. save.</small><br>
+                {% if user.is_authenticated %} 
+                {% else %}
+                <a href="sso/register" class="my-3 btn btn-secondary btn-sm align-self register-btn">Register now</a>
+                {% endif %}
+
+            </div>  
+            <div class="d-lg-block d-none col-lg-4">
+                <a href="https://ibb.co/sQPHPP0"><img class="img-fluid" src="https://i.ibb.co/nf0C00H/i-Phone-12-Pro.png" alt="i-Phone-12-Pro"/></a>
+            </div>
+        </div>
+    </div>
 {% endblock body %}

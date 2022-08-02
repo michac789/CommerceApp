@@ -1,46 +1,70 @@
 {% extends "layout/root.html" %}
+{% load static %}
 
 {% block title %}
 
 {% endblock title %}
 
 {% block script %}
+    <script src="{% static 'catalog/item.js' %}" type="module"></script>
 
 {% endblock script %}
 
-{% block body %}
-    CATALOG SPECIFIC PAGE - TODO
-    {{ item|linebreaks }}
-    {{ item.title|linebreaks }}
-    {{ item.description|linebreaks }}
-    {{ item.price|linebreaks }}
-    {{ item.category|linebreaks }}
-    {{ item.time_created|linebreaks }}
-    {{ item.buyer|linebreaks }}
-    {{ item.seller|linebreaks }}
-    <a href="{% url 'catalog:index' %}">Back to catalog list</a>
-
-    <div class="container">
+{% block body %} 
+    <link rel="stylesheet" href="{% static 'catalog/item.css' %}">
+    <div class="m-auto item-image">
+        <img class="img-fluid" src={{ item.image }} alt="product-photo">
+    </div>
+    <div class="container border item-container">
+        <!-- CATALOG SPECIFIC PAGE - TODO --> 
+        <h1 class="d-flex align-items-center">
+            {{ item.title }} 
+                <span class="fs-6 badge bg-secondary rounded-pill ms-3">{{ item.category }}</span>
+            </h1> 
+        <h5>$ {{ item.price }}</h5>
+        <hr>
+        <p class="lead text-muted">
+            <span class="fw-bold">Description:</span>
+            <br>{{ item.description }} 
+        </p> 
+        
+        <!-- {{ item.time_created|linebreaks }} -->
+  
         {% if notloggedin %}
             <div class="alert alert-warning">
                 Please log in to add item to your cart or chat seller!
             </div>
         {% else %}
             {% if status.creator %}
-                You are the creator.
-                Edit Button - TODO
-                <a href="{% url 'myshop:edit' item_id=item.id %}">
-                    Edit
+            <div class="alert alert-warning container my-3">
+                You are the seller of this item. You can edit the details.
+            </div>
+            
+                <a class="btn btn-secondary" href="{% url 'myshop:edit' item_id=item.id %}">
+                    Edit<i class="ms-2 bi bi-pen"></i>
                 </a>
+         
             {% else %}
-                Chat Seller Button - TODO
+                <!-- Contact Seller Button - TODO -->
+                <button class="btn btn-secondary my-3 contact-btn">
+                    Contact seller
+                    <i class="bi bi-chat"></i>
+                </button>
             {% endif %}
-            <br>
         {% endif %}
         {% if status.sold %}
-            Item sold out!
+            <p class="error lead">Item sold out</p>
         {% else %}
-            Add Cart Button - TODO
+            <!-- Add Cart Button --> 
+            <button class="btn btn-secondary my-3 add-cart-btn">
+                Add to cart
+                <i class="bi bi-cart4"></i>
+            </button>
         {% endif %}
     </div>
+     <!-- to make it scrollable   -->
+    
+
+
+    
 {% endblock body %}

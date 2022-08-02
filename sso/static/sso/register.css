@@ -1,7 +1,11 @@
-#register-container { 
-    height: 100vh;
+.register-container { 
+    height: calc(100vh - 56px);
     align-items: center; 
     justify-content: center;  
     padding-top: 20vh;
     z-index: -1 !important;
+}
+
+div.card { 
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }

@@ -1,7 +1,7 @@
 {% load static %}
 <link href="{% static 'sso/navbar.css' %}" rel="stylesheet">
 <nav id="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark px-4 position-fixed vw-100">
-    <div class="container-fluid">
+    <div class="container-fluid px-5">
         <a class="navbar-brand d-none d-lg-inline lead" href="{% url 'catalog:main' %}">S H O P A H O L I C</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon color-dark"></span>
@@ -39,9 +39,12 @@
                         {% endif %}
                     </ul>
                 </li>
+                {% if user.is_authenticated %}
                 <li class="nav-item d-none d-lg-inline-block pt-1">
                     <a class="nav-link" href="{% url 'cart:main' %}"><i class="bi bi-cart"></i></a>
                 </li>
+                {% endif %}
+
             </ul>
         </div>
         <!-- Outside of collapse -->
@@ -67,11 +70,16 @@
                     </li>
                 {% endif %}
             </ul>
+            {% if user.is_authenticated %}
             <a class="nav-link d-inline-block mt-1" href="{% url 'cart:main' %}"><i class="bi bi-cart"></i></a>
+            {% endif %}
+
         </div>
     </div>
     
+    
 </nav>
+<div style="height: 46px;"></div>
 
 
 
