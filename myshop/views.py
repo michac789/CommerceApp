@@ -74,12 +74,12 @@ def create(request):
         
         # if form is invalid, do not update database
         else: return render(request, "myshop/create.html", {
-            "form": form,
+            "form": form, "usage": "create",
         })
     
     # 'get' method: render empty form
     else: return render(request, "myshop/create.html", {
-        "form": ItemForm(),
+        "form": ItemForm(), "usage": "create",
     })
 
 
@@ -112,10 +112,11 @@ def edit(request, item_id):
         
         # if form is invalid, do not update database
         else: return render(request, "myshop/create.html", {
-            "form": form,
+            "form": form, "usage": "edit", "id": item_id,
         })
     
     # 'get' method: render form and prepopulate with existing value
-    return render(request, "myshop/edit.html", {
-        "form": ItemForm(item.formhandler())
+    return render(request, "myshop/create.html", {
+        "form": ItemForm(item.formhandler()),
+        "title": "Edit your product", "usage": "edit", "id": item_id,
     })
