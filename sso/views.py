@@ -3,10 +3,13 @@ from django.urls import reverse
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.password_validation import validate_password
 from django.forms import ValidationError
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.db import IntegrityError
 
+from requests import get
+from random import sample
 from .models import User, AdminPost
+from myshop.models import Item, Category
 
 
 def register_view(request):
@@ -100,3 +103,18 @@ def tc(request):
     return render(request, "sso/t&c.html", {
         "post": AdminPost.objects.get(id=1).serialize()
     })
+    
+
+# WARNING!!! just call this view function ONCE only
+def seed(_):
+    promise = get('https://fakestoreapi.com/products')
+    for item in promise.json():
+        Item.objects.create(
+            title = item["title"],
+            description = item["description"],
+            image = item["image"],
+            price = item["price"],
+            category = Category.objects.get(code = "OT"),
+            seller = sample(list(User.objects.all()), 1)[0],
+        )
+    return HttpResponse("Mock data added!")
