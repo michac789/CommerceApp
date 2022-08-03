@@ -19,6 +19,8 @@
     <h4 class="mb-4 text-muted">Name: {{ user.username }}</h4>
     <h4 class="mb-4 text-muted">Email: {{ user.email }}</h4>
     <!-- {{ user.tier }}  Tier needs to be clarified (using badges or what?)-->
-    <a href="{% url 'userprofile:chats' %}" class="btn btn-secondary">Your message <i class="bi bi-chat-dots"></i></a>
+    {% if request.user == user %}
+        <a href="{% url 'userprofile:chats' %}" class="btn btn-secondary">Your message <i class="bi bi-chat-dots"></i></a>
+    {% endif %}
     </div>
 {% endblock body %}
