@@ -1,0 +1,18 @@
+{% extends "layout/root.html" %}
+{% load static %}
+
+{% block title %}
+
+{% endblock title %}
+
+{% block script %}
+    <script src="{% static 'userprofile/chatview.js' %}" type="module"></script>
+{% endblock script %}
+
+{% block body %}
+    TODO <br>
+    <div id="root"></div>
+    Chat with <span id="username">{{ username }}</span>
+    <input type="text" id="message">
+    <button id="sendmessage">Send</button>
+{% endblock body %}

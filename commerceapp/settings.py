@@ -80,6 +80,10 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'commerceapp.wsgi.application'
 
+if DEBUG:
+    import mimetypes
+    mimetypes.add_type("application/javascript", ".js", True)
+
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
