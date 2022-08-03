@@ -1,7 +1,6 @@
 from django.db import models
 from django.core.exceptions import ObjectDoesNotExist, EmptyResultSet
 from sso.models import User
-from myshop.models import Item
 
 
 class Chat(models.Model):
@@ -56,6 +55,12 @@ class Chat(models.Model):
             Chat.objects.filter(user1=self.user2, user2=self.user1).exists()):
                 raise Exception('No duplicate chat model between any two users!')
         return super().save(*args, **kwargs)
+    
+    def serialize(self, user):
+        return {
+            "id": self.id,
+            "username": (self.user1 if self.user2 == user else self.user2),
+        }
 
 
 class ChatContent(models.Model):

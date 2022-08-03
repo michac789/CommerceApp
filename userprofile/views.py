@@ -1,16 +1,19 @@
 from django.views.generic.base import TemplateView
 from django.views import View
 from django.core.exceptions import ObjectDoesNotExist, EmptyResultSet
-from django.http import Http404, JsonResponse
-from django.shortcuts import get_object_or_404, render
+from django.http import JsonResponse
+from django.db.models import Q
+from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from json import loads
 from time import sleep
 
+from .decorator import api_view
 from sso.models import User
 from .models import Chat, ChatContent
+from commerceapp.settings import LOGIN_URL
 
 
 class ProfileView(TemplateView):
@@ -20,11 +23,26 @@ class ProfileView(TemplateView):
         return {"user": get_object_or_404(User, username = kwargs["username"])}
 
 
+@method_decorator([login_required(login_url=LOGIN_URL)], name="dispatch")
+class AllChat(TemplateView):
+    template_name = "profile/allchat.html"
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["chats"] = []
+        for chat in Chat.objects.filter(Q(user1=self.request.user) |
+                                        Q(user2=self.request.user)):
+            context["chats"].append(chat.serialize(self.request.user))
+        return context
+
+
+@method_decorator([login_required(login_url=LOGIN_URL)], name="dispatch")
 class ViewChat(TemplateView):
     template_name = "profile/chatview.html"
 
 
-@method_decorator([csrf_exempt], name="dispatch")
+@method_decorator([csrf_exempt, api_view("GET", "POST", "PATCH"),
+                   login_required], name="dispatch")
 class FetchChat(View):
     def get(self, request, username):
         try:
@@ -55,21 +73,3 @@ class FetchChat(View):
             if x == False: break
             sleep(0.2)
         return JsonResponse({ "up_to_date": x,})
-
-
-@login_required(login_url="sso:login")
-def chats(request):
-    print(Chat.objects.filter(buyer=request.user))
-    return render(request, "profile/chats.html", {
-        "chats": Chat.objects.filter(buyer=request.user)
-    })
-
-
-def chatcontent(request, chat_id):
-    try:
-        chatcontents = Chat.retrieve_chats(chat_id)
-    except Chat.DoesNotExist:
-        return Http404("...")
-    return render(request, "profile/chatcontent.html", {
-        "chatcontents": chatcontents,
-    })
