@@ -1,9 +1,9 @@
 from django.views.generic.base import TemplateView
 from django.views import View
-from django.core.exceptions import ObjectDoesNotExist, EmptyResultSet
-from django.http import JsonResponse
+from django.core.exceptions import ObjectDoesNotExist, EmptyResultSet, ImproperlyConfigured
+from django.http import HttpResponseBadRequest, JsonResponse
 from django.db.models import Q
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
@@ -37,8 +37,13 @@ class AllChat(TemplateView):
 
 
 @method_decorator([login_required(login_url=LOGIN_URL)], name="dispatch")
-class ViewChat(TemplateView):
-    template_name = "profile/chatview.html"
+class ViewChat(View):
+    def get(self, request, username):
+        if request.user.username == username:
+            return HttpResponseBadRequest("You cannot talk to yourself!")
+        return render(request, "profile/chatview.html", {
+            "username": username,
+        })
 
 
 @method_decorator([csrf_exempt, api_view("GET", "POST", "PATCH"),
@@ -52,6 +57,8 @@ class FetchChat(View):
         except EmptyResultSet:
             Chat.create(request.user.username, username)
             chat, id = Chat.retrieve_chats(request.user.username, username)
+        except ImproperlyConfigured:
+            return JsonResponse({ "error": "Cannot chat to yourself!",}, status=400)
         tmpchat = Chat.objects.get(id=id)
         tmpchat.update_true(request.user)
         return JsonResponse({ "chat": chat, "id": id,})

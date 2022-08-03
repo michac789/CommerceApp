@@ -1,5 +1,5 @@
 from django.db import models
-from django.core.exceptions import ObjectDoesNotExist, EmptyResultSet
+from django.core.exceptions import ObjectDoesNotExist, EmptyResultSet, ImproperlyConfigured
 from sso.models import User
 
 
@@ -54,6 +54,8 @@ class Chat(models.Model):
         if (Chat.objects.filter(user1=self.user1, user2=self.user2).exists() or
             Chat.objects.filter(user1=self.user2, user2=self.user1).exists()):
                 raise Exception('No duplicate chat model between any two users!')
+        if self.user1 == self.user2:
+            raise ImproperlyConfigured("You cannot talk to yourself!")
         return super().save(*args, **kwargs)
     
     def serialize(self, user):
