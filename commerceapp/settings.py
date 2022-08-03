@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'cart',
     'userprofile',
     'api',
+    'tz_detect',
 ]
 
 AUTH_USER_MODEL = 'sso.User'
@@ -58,6 +59,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'tz_detect.middleware.TimezoneMiddleware',
 ]
 
 ROOT_URLCONF = 'commerceapp.urls'

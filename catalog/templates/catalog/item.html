@@ -43,10 +43,12 @@
          
             {% else %}
                 <!-- Contact Seller Button - TODO -->
-                <button class="btn btn-secondary my-3 contact-btn">
-                    Contact seller
-                    <i class="bi bi-chat"></i>
-                </button>
+                <a href="{% url 'userprofile:chat' username=item.seller.username %}">
+                    <button class="btn btn-secondary my-3 contact-btn">
+                        Contact seller
+                        <i class="bi bi-chat"></i>
+                    </button>
+                </a>
             {% endif %}
         {% endif %}
         {% if status.sold %}

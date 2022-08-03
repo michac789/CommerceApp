@@ -1,6 +1,8 @@
 from django.db import models
 from django.core.exceptions import ObjectDoesNotExist, EmptyResultSet, ImproperlyConfigured
+from django.utils import timezone
 from sso.models import User
+from .util import convert_to_localtime
 
 
 class Chat(models.Model):
@@ -76,6 +78,6 @@ class ChatContent(models.Model):
         return {
             "sender": self.sender.username,
             "content": self.content,
-            "time": self.time.strftime("%b %d %Y, %I:%M %p"),
+            "time": convert_to_localtime(self.time),
             "id": self.id,
         }
