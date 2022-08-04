@@ -1,9 +1,11 @@
 from django.urls import path
-from . import views
+from .views import ProfileView, AllChat, ViewChat, FetchChat
+
 
 app_name = "userprofile"
 urlpatterns = [
-    path("view/<str:username>", views.profile, name="profile"),
-    path("chats", views.chats, name="chats"),
-    path("chats/<int:chat_id>", views.chatcontent, name="chatcontent"),
+    path("view/<str:username>", ProfileView.as_view(), name="profile"),
+    path("chats", AllChat.as_view(), name="chats"),
+    path("chats/<str:username>", ViewChat.as_view(), name="chat"),
+    path("chats/api/<str:username>", FetchChat.as_view()),
 ]

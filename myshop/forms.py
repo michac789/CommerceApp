@@ -1,11 +1,9 @@
-from django.forms import ModelForm, Textarea
 from django import forms
-from django.utils.safestring import mark_safe
 
 from .models import Item, Seller
 
 
-class ItemForm(ModelForm):
+class ItemForm(forms.ModelForm):
     class Meta:
         model = Item
         fields = ['title', 'description', 'image', 'price', 'category']
@@ -26,13 +24,7 @@ class ItemForm(ModelForm):
         self.fields['category'].empty_label = 'Select a category here'
         
 
-class SellerRegistrationForm(ModelForm):
+class SellerRegistrationForm(forms.ModelForm):
     class Meta:
         model = Seller
         fields = ['location']
-        
-    def __init__(self, *args, **kwargs):
-        super(SellerRegistrationForm, self).__init__(*args, **kwargs)
-        self.fields["location"].widget = forms.TextInput(attrs={
-            
-        })

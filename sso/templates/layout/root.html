@@ -20,6 +20,8 @@
     <!-- Navbar -->
     {% include "layout/navbar.html" %}
     <!-- Navbar -->
+    {% load tz_detect %}
+    {% tz_detect %}
     <body>
         <!-- TODO - sso/templates/layout/root.html : show whether user has logged in or not /// -->
         <div style="height: 20px;"></div>

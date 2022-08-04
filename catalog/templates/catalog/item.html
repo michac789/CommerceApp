@@ -15,8 +15,7 @@
     <div class="m-auto item-image">
         <img class="img-fluid" src={{ item.image }} alt="product-photo">
     </div>
-    <div class="container border item-container">
-        <!-- CATALOG SPECIFIC PAGE - TODO --> 
+    <div class="container border item-container pb-2">
         <h1 class="d-flex align-items-center">
             {{ item.title }} 
                 <span class="fs-6 badge bg-secondary rounded-pill ms-3">{{ item.category }}</span>
@@ -26,9 +25,7 @@
         <p class="lead text-muted">
             <span class="fw-bold">Description:</span>
             <br>{{ item.description }} 
-        </p> 
-        
-        <!-- {{ item.time_created|linebreaks }} -->
+        </p>
   
         {% if notloggedin %}
             <div class="alert alert-warning">
@@ -46,15 +43,17 @@
          
             {% else %}
                 <!-- Contact Seller Button - TODO -->
-                <button class="btn btn-secondary my-3 contact-btn">
-                    Contact seller
-                    <i class="bi bi-chat"></i>
-                </button>
+                <a href="{% url 'userprofile:chat' username=item.seller.username %}">
+                    <button class="btn btn-secondary my-3 contact-btn">
+                        Contact seller
+                        <i class="bi bi-chat"></i>
+                    </button>
+                </a>
             {% endif %}
         {% endif %}
         {% if status.sold %}
             <p class="error lead">Item sold out</p>
-        {% else %}
+        {% elif not notloggedin and not status.creator %}
             <!-- Add Cart Button --> 
             <button class="btn btn-secondary my-3 add-cart-btn">
                 Add to cart

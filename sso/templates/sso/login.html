@@ -23,11 +23,15 @@
                             <p>Do not have one? <a class="text-primary" href="{% url 'sso:register' %}">Register now!</a></p>
                             <button class="btn btn-secondary" type="submit">Login</button>
                         </form>
+                        {% if error %}
+                            <div class="alert alert-danger">
+                                {{ error }}
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
         </div>
     </div>
     
-    {{ error }}
 {% endblock body %}

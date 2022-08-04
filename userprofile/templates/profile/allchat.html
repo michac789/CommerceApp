@@ -1,0 +1,25 @@
+{% extends "layout/root.html" %}
+{% load static %}
+
+{% block title %}
+
+{% endblock title %}
+
+{% block script %}
+
+{% endblock script %}
+
+{% block body %}
+    CHAT LIST PAGE - TODO <br>
+
+    <a href="{% url 'userprofile:profile' username=request.user %}">
+        Back to profile page <br>
+    </a>
+    {% for chat in chats %}
+        <a href="{% url 'userprofile:chat' username=chat.username %}">
+            Chat ID {{ chat.id }} with {{ chat.username }} <br>
+        </a>
+    {% empty %}
+        No Active Chat!
+    {% endfor %}
+{% endblock body %}
