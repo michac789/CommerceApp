@@ -10,9 +10,12 @@
 {% endblock script %}
 
 {% block body %}
-    TODO <br>
-    <div id="root"></div>
-    Chat with <span id="username">{{ username }}</span>
-    <input type="text" id="message">
-    <button id="sendmessage">Send</button>
+    <!-- TODO -->
+
+    <div class="container">
+        <div id="root" data-receiver="{{ username }}"></div>
+        <span id="username" class="lead"></span>
+        <input type="text" id="message">
+        <button id="sendmessage">Send</button>
+    </div>
 {% endblock body %}

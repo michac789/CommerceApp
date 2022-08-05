@@ -10,16 +10,28 @@
 {% endblock script %}
 
 {% block body %}
-    CHAT LIST PAGE - TODO <br>
-
-    <a href="{% url 'userprofile:profile' username=request.user %}">
-        Back to profile page <br>
-    </a>
-    {% for chat in chats %}
-        <a href="{% url 'userprofile:chat' username=chat.username %}">
-            Chat ID {{ chat.id }} with {{ chat.username }} <br>
+    <!-- CHAT LIST PAGE - TODO <br> -->
+    <link href="{% static 'userprofile/allchat.css' %}" rel="stylesheet">
+    <div class="container chat-container">
+        <a href="{% url 'userprofile:profile' username=request.user %}">
+            <button class="btn btn-secondary">Back to profile <i class="bi bi-person"></i>
+            </button>
+            <br>
         </a>
-    {% empty %}
-        No Active Chat!
-    {% endfor %}
+
+        <ul class="list-group mt-5 row align-items-center d-flex align-items-center">
+            {% for chat in chats %}  
+                <li class="list-group-item col-10 col-md-6 col-lg-5 position-relative d-flex justify-content-between">
+                    <a href="{% url 'userprofile:chat' username=chat.username %}" >
+                        {{ chat.username }} 
+                    
+                    </a>
+                        <a href="{% url 'userprofile:chat' username=chat.username %}" class="btn btn-outline-secondary p-1"><i class="ms-auto bi bi-chat-dots"></i></a> 
+                </li>
+            {% empty %}
+                <li class="lead list-group-item">No active chat...</li>
+            {% endfor %}
+        </ul>
+    
+    </div>
 {% endblock body %}
