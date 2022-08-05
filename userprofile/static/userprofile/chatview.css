@@ -1,0 +1,4 @@
+.chatbox-container { 
+    height: 60vh; 
+    width: max(300px, 50vw);
+}
