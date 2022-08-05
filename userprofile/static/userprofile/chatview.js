@@ -11,11 +11,22 @@ const loadMessage = (animate_last=true) => {
         $("#root")[0].innerHTML = ""  
         const receiver = $("#root")[0].dataset.receiver
         let last_id = 0
-        result["chat"].forEach(chat => {
-            $("#root")[0].innerHTML += `<span id=${chat.id}>
-                ${chat.sender}: ${chat.content} (${chat.time}) <br>
-            </span>`
-            last_id = chat.id
+        result["chat"].forEach(chat => { 
+            if ( receiver == chat.sender ) { 
+                $("#root")[0].innerHTML += 
+                `<div id=${chat.id}>
+                    ${chat.sender}: ${chat.content} (${chat.time}) <br>
+                </div>`
+                last_id = chat.id
+            } 
+            else { 
+                $("#root")[0].innerHTML += 
+                `<div id=${chat.id} class="text-end">
+                    ${chat.sender}: ${chat.content} (${chat.time}) <br>
+                </div>`
+                last_id = chat.id
+            }
+          
         })
         if (animate_last) {
             $(`#${last_id}`).hide(0).show(500)
