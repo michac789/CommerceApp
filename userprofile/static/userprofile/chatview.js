@@ -24,7 +24,6 @@ const loadMessage = (animate_last=true) => {
                 </div>` 
             } 
             last_id = chat.id 
-            console.log(chat)
 
         }) 
         if (animate_last) {
