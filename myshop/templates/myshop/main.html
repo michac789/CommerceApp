@@ -1,14 +1,18 @@
 {% extends "layout/root.html" %}
+{% load static %}
 
 {% block title %}
 
 {% endblock title %}
 
 {% block script %}
+    <script src="{% static 'myshop/main.js' %}" type="module"></script>
 
 {% endblock script %}
 
 {% block body %}
+    <link rel="stylesheet" href="{% static 'myshop/main.css' %}">
+
     <!-- my shop TODO -->
     <div style="height: 56px;"></div>
     <div class="container text-center">
@@ -26,13 +30,33 @@
 
         <div style="height: 20px;"></div>
         <br>
-        {% for item in items %}
-            <a href="{% url 'catalog:item' item_id=item.id %}">
-                {{ item }}
-            </a><br>
-        {% empty %}
-            <h4 class="text-muted">No item yet :(</h4>
-        {% endfor %}
+        <div class="catalog-container">
+            {% for item in items %}
+            
+                <a href="{% url 'catalog:item' item_id=item.id %}"> 
+                    <div class="card"> 
+                        <div>
+                            <img src="{{ item.image }}" class="card-img-top" alt="product-photo"> 
+                        </div>
+                        <!-- alt need to be outputted dynamically (using image name perhaps)  -->
+                        <div class="card-body">
+                            <h1 class="lead fw-100">S$ {{ item.price }}</h1>
+                            <hr>
+                            <h5 class="card-title text-truncate">
+                                {{ item.title }}
+                                <button class="btn bookmark-btn bookmark-{{ item.id }}" data-item-id="{{ item.id }}">
+                                    <!-- Placeholder for bookmark icon -->
+                                </button>
+                            </h5> 
+                            <!-- <small> Condition:  
+                            </small> -->
+                        </div>
+                    </div>
+                </a>
+            {% empty %}
+                <h4 class="text-muted">No item yet :(</h4>
+            {% endfor %}
+        </div>
         <!-- <div class="container">
             <div class="alert alert-info">
                 Try to add query parameter: ?status=sold, ?status=onsale, ?status=all;
