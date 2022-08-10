@@ -14,16 +14,21 @@ const loadMessage = (animate_last=true) => {
         result["chat"].forEach(chat => { 
             if ( receiver == chat.sender ) { 
                 $("#root")[0].innerHTML += 
-                `<div id=${chat.id}>
-                    ${chat.sender}: ${chat.content} (${chat.time}) <br>
+                `<div id=${chat.id} class="mb-3">
+                    <div class="d-inline-block border rounded-pill px-2 bg-secondary text-white">
+                        ${chat.sender}: ${chat.content} (${chat.time}) <br>
+                    </div>
                 </div>`
                 last_id = chat.id
             } 
             else { 
                 $("#root")[0].innerHTML += 
-                `<div id=${chat.id} class="text-end">
-                    ${chat.sender}: ${chat.content} (${chat.time}) <br>
-                </div>`
+                `
+                    <div id=${chat.id} class="text-end mb-3" >
+                        <div class="d-inline-block border rounded-pill px-2">
+                            ${chat.sender}: ${chat.content} (${chat.time}) <br>
+                        </div>
+                    </div>`
                 last_id = chat.id
             }
           
