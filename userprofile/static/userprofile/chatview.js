@@ -64,11 +64,28 @@ const sendMessage = () => {
         })
     })
     .then(response => response.json())
-    .then(result => {
+    .then(result => { 
+        // reset the form value
         $("#message")[0].value = ""
-        $("#root")[0].innerHTML += `<span id=${result.new.id}>
-            ${result.new.sender}: ${result.new.content} (${result.new.time}) <br>
-        </span>`
+        const receiver = $("#root")[0].dataset.receiver
+
+        if ( receiver == result.new.sender ) { 
+            $("#root")[0].innerHTML += 
+            `<div id=${result.new.id} class="mb-3">
+                <div class="d-inline-block border rounded-pill px-2 bg-secondary text-white">
+                    ${result.new.sender}: ${result.new.content} (${result.new.time}) <br>
+                </div>
+            </div>`
+        } 
+        else { 
+            $("#root")[0].innerHTML += 
+            `
+                <div id=${result.new.id} class="text-end mb-3" >
+                    <div class="d-inline-block border rounded-pill px-2">
+                        ${result.new.sender}: ${result.new.content} (${result.new.time}) <br>
+                    </div>
+                </div>`
+        } 
         $(`#${result.new.id}`).hide(0).show(500)
     })
     .catch(error => { $("#root")[0].innerHTML += `Error: ${error}` })
