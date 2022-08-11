@@ -69,22 +69,6 @@ document.addEventListener('DOMContentLoaded', () => {
         })
 
 
-    // pagination 
-    const paginationNavReference = document.querySelector('.pagination')
-    const numberOfPages = paginationNavReference.dataset.paginationNumber 
-    console.log(paginationNavReference)
-
-    for( let i = 1; i <= numberOfPages; i++) {
-        paginationNavReference.innerHTML += `
-        <li class="page-item">
-            <a class="page-link" href="/catalog?page=${i}" aria-label="Previous">
-                <span aria-hidden="true">${i}</span>
-            </a>
-        </li> 
-        
-        `
-
-    }
     
     
 

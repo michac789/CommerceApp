@@ -1,19 +1,69 @@
+
 $(document).ready(() => {
     loadMessage(false)
     $("#sendmessage").click(sendMessage)
+
 })
 
+function timeSince(date) {
+
+    var seconds = Math.floor((new Date() - date) / 1000);
+  
+    var interval = seconds / 31536000;
+  
+    if (interval > 1) {
+      return Math.floor(interval) + " years";
+    }
+    interval = seconds / 2592000;
+    if (interval > 1) {
+      return Math.floor(interval) + " months";
+    }
+    interval = seconds / 86400;
+    if (interval > 1) {
+      return Math.floor(interval) + " days";
+    }
+    interval = seconds / 3600;
+    if (interval > 1) {
+      return Math.floor(interval) + " hours";
+    }
+    interval = seconds / 60;
+    if (interval > 1) {
+      return Math.floor(interval) + " minutes";
+    }
+    return Math.floor(seconds) + " seconds";
+  }
+  var aDay = 24*60*60*1000;
+
+
+  
 const loadMessage = (animate_last=true) => {
-    fetch(`/profile/chats/api/${$("#username")[0].innerHTML}`)
+    fetch(`/profile/chats/api/${$("#root")[0].dataset.receiver}`)
     .then(response => response.json())
     .then(result => {
-        $("#root")[0].innerHTML = ""
+        $("#root")[0].innerHTML = ""  
+        const receiver = $("#root")[0].dataset.receiver
         let last_id = 0
-        result["chat"].forEach(chat => {
-            $("#root")[0].innerHTML += `<span id=${chat.id}>
-                ${chat.sender}: ${chat.content} (${chat.time}) <br>
-            </span>`
-            last_id = chat.id
+        result["chat"].forEach(chat => { 
+            if ( receiver == chat.sender ) { 
+                $("#root")[0].innerHTML += 
+                `<div id=${chat.id} class="mb-3">
+                    <div class="d-inline-block border rounded-pill px-2 bg-secondary text-white">
+                        ${chat.sender}: ${chat.content} (${chat.time}) <br>
+                    </div>
+                </div>`
+                last_id = chat.id
+            } 
+            else { 
+                $("#root")[0].innerHTML += 
+                `
+                    <div id=${chat.id} class="text-end mb-3" >
+                        <div class="d-inline-block border rounded-pill px-2">
+                            ${chat.sender}: ${chat.content} (${chat.time}) <br>
+                        </div>
+                    </div>`
+                last_id = chat.id
+            }
+          
         })
         if (animate_last) {
             $(`#${last_id}`).hide(0).show(500)
@@ -24,7 +74,7 @@ const loadMessage = (animate_last=true) => {
 }
 
 const checkUpdate = () => {
-    fetch(`/profile/chats/api/${$("#username")[0].innerHTML}`, {
+    fetch(`/profile/chats/api/${$("#root")[0].dataset.receiver}`, {
         method: "PATCH"
     })
     .then(response => response.json())
@@ -39,18 +89,35 @@ const checkUpdate = () => {
 }
 
 const sendMessage = () => {
-    fetch(`/profile/chats/api/${$("#username")[0].innerHTML}`, {
+    fetch(`/profile/chats/api/${$("#root")[0].dataset.receiver}`, {
         method: "POST",
         body: JSON.stringify({
             content: $("#message")[0].value
         })
     })
     .then(response => response.json())
-    .then(result => {
+    .then(result => { 
+        // reset the form value
         $("#message")[0].value = ""
-        $("#root")[0].innerHTML += `<span id=${result.new.id}>
-            ${result.new.sender}: ${result.new.content} (${result.new.time}) <br>
-        </span>`
+        const receiver = $("#root")[0].dataset.receiver
+
+        if ( receiver == result.new.sender ) { 
+            $("#root")[0].innerHTML += 
+            `<div id=${result.new.id} class="mb-3">
+                <div class="d-inline-block border rounded-pill px-2 bg-secondary text-white">
+                    ${result.new.sender}: ${result.new.content} (${result.new.time}) <br>
+                </div>
+            </div>`
+        } 
+        else { 
+            $("#root")[0].innerHTML += 
+            `
+                <div id=${result.new.id} class="text-end mb-3" >
+                    <div class="d-inline-block border rounded-pill px-2">
+                        ${result.new.sender}: ${result.new.content} (${result.new.time}) <br>
+                    </div>
+                </div>`
+        } 
         $(`#${result.new.id}`).hide(0).show(500)
     })
     .catch(error => { $("#root")[0].innerHTML += `Error: ${error}` })
