@@ -15,7 +15,8 @@ class ItemUserPair(models.Model):
             "item_title": self.item.title,
             "item_category": self.item.category.category,
             "item_closed": self.item.closed,
-            "seller_username": self.item.seller.username,
+            "seller_username": self.item.seller.username, 
+            "item_price": self.item.price
         }
 
 
