@@ -49,6 +49,11 @@ def index(request):
         try: items = (Item.sort(request.GET["sort"]) if items == "" else
                       Item.sort(request.GET["sort"], items))
         except FieldError: pass
+        
+    # get bookmarked item feature (for logged in users only)
+    if "bookmarked" in request.GET and not request.user.is_anonymous:
+        items = (util.bookmark(request) if items == "" else
+            util.bookmark(request, items))
     
     # pagination feature
     # ex: ?num=5&page=1 means paginate 5 per page, open page 1

@@ -1,4 +1,15 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // show bookmarked item feature
+    $("#bookmark").change(function() {
+        const tmp = window.location.href
+        if (this.checked) {
+            window.location.href = tmp + (tmp.includes("?") ? "" : "?") + "bookmarked=t&"
+        } else {
+            const x = tmp.split('bookmarked=t&')
+            window.location.href = x[0] + (x[1] ? x[1] : "")
+        }
+    })
+
     // Hover for the frame
     let cards = document.querySelectorAll(".card");
     // initializing
