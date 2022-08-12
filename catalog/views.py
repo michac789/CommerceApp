@@ -1,6 +1,7 @@
 from django.http import Http404
 from django.db.models import Q
 from django.core.exceptions import FieldError
+from django.views.generic.base import TemplateView
 from django.shortcuts import render
 from datetime import datetime as dt, timedelta as td
 
@@ -72,3 +73,7 @@ def item(request, item_id):
         "status": item.getstatus(request.user),
         "notloggedin": request.user.is_anonymous
     })
+    
+
+class About(TemplateView):
+    template_name = "catalog/about.html"

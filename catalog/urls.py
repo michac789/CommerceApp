@@ -8,6 +8,7 @@ urlpatterns = [
     path("", views.main, name="main"),
     path("catalog", views.index, name="index"),
     path("catalog/<int:item_id>", views.item, name="item"),
+    path("about", views.About.as_view(), name="about"),
 ]
 
 # urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
