@@ -1,11 +1,16 @@
+from http.client import HTTPResponse
 from django.http import JsonResponse
+from django.views import View
+from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 from commerceapp.settings import LOGIN_URL
 
 from cart.models import Bookmark, Cart
 from myshop.models import Item
 from sso.models import User
+from catalog.util import bookmark
 
 
 def test(_):
@@ -77,3 +82,23 @@ def addcart(request, item_id):
     
     # return error for other request methods
     else: return JsonResponse({ "error": "Invalid request method!"}, status = 405)
+
+
+@method_decorator(login_required, name="dispatch")
+class Buy(View):
+    def get(self, request):
+        cart_items = Cart.objects.filter(user = request.user)
+        item_ids = [cart_item.item.id for cart_item in cart_items]
+        try:
+            Item.buy(item_ids, request.user)
+        except ObjectDoesNotExist:
+            return JsonResponse({
+                "error": "TODO",
+            }, status = 400)
+        except Exception:
+            return JsonResponse({
+                "error": "TODO",
+            }, status = 400)
+        return JsonResponse({
+            "success": "TODO"
+        }, status = 200)

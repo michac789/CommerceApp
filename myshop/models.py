@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models.functions import Lower
 from django.core.validators import MinValueValidator
+from django.core.exceptions import ObjectDoesNotExist
 from sso.models import User
 from django.core.serializers import serialize
 from json import loads
@@ -77,11 +78,18 @@ class Item(models.Model):
             queryset.order_by(Lower(sortkey[3:]).desc()))
     
     @classmethod
-    def buy(self, item_id, user):
-        item = Item.objects.get(id = item_id)
-        item.closed = True
-        item.buyer = user
-        item.save()
+    def buy(self, item_ids, user):
+        for item_id in item_ids:
+            try:
+                item = Item.objects.get(id = item_id)
+            except Item.DoesNotExist:
+                raise ObjectDoesNotExist("Invalid item id!")
+            if item.closed == True:
+                raise Exception("Item closed!")
+            item.closed = True
+            item.buyer = user
+            item.save()
+        return True
         
     def __str__(self):
         return f"<Item ID {self.id}: {self.title}>"

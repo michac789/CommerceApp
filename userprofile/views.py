@@ -13,6 +13,7 @@ from time import sleep
 from .decorator import api_view
 from sso.models import User
 from .models import Chat, ChatContent
+from myshop.models import Item
 from commerceapp.settings import LOGIN_URL
 
 
@@ -80,3 +81,13 @@ class FetchChat(View):
             if x == False: break
             sleep(0.2)
         return JsonResponse({ "up_to_date": x,})
+
+
+@method_decorator([login_required(login_url=LOGIN_URL)], name="dispatch")
+class PurchaseHistory(TemplateView):
+    template_name = "profile/history.html"
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["items"] = Item.objects.filter(buyer = self.request.user)
+        return context

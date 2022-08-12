@@ -6,4 +6,5 @@ urlpatterns = [
     path("", views.test),
     path("bookmark/<int:item_id>", views.bookmark),
     path("cart/<int:item_id>", views.addcart),
+    path("buy", views.Buy.as_view()),
 ]
