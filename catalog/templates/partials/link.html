@@ -9,3 +9,8 @@ num={{ props_num }}&amp;
 {% elif request.GET.num %}
 num={{ request.GET.num }}&amp;
 {% endif %}
+{% if props_sort %}
+sort={{ props_sort }}&amp;
+{% elif request.GET.sort %}
+sort={{ request.GET.sort }}&amp;
+{% endif %}

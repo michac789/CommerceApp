@@ -14,6 +14,27 @@
     <!-- CATALOG INDEX PAGE - TODO  -->
     <link rel="stylesheet" href="{% static 'catalog/index.css' %}">
     <div class="container-fluid">
+        <div class="container">
+            <div class="accordion" id="accordionExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            Advanced options
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            {% include 'partials/searchfeature.html' %}
+                            {% include 'partials/sortfeature.html' %}
+                            <a href="{% url 'catalog:index' %}">
+                                Reset
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="catalog-container">
             {% for item in pagination.object_list %}
                     <a href="{% url 'catalog:item' item_id=item.id %}"> 
@@ -55,5 +76,6 @@
                 {% include 'partials/itemsperpage.html' %}
             </section>
         </aside>
+        
     </div>
 {% endblock body %}
