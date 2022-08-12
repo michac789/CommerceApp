@@ -1,0 +1,11 @@
+?
+{% if props_page %}
+page={{ props_page }}&amp;
+{% elif request.GET.page %}
+page={{ request.GET.page }}&amp;
+{% endif %}
+{% if props_num %}
+num={{ props_num }}&amp;
+{% elif request.GET.num %}
+num={{ request.GET.num }}&amp;
+{% endif %}
