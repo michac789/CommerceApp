@@ -14,12 +14,13 @@ def main(request):
 
 
 def index(request):
-    items = ""
+    # only display items still on sale in catalog
+    items = Item.onsale.all()
 
     # category filter feature
     # ex: ?category=EL_HI means filter items that has those 2 category codes
     if "category" in request.GET:
-        items = Item.get_with_category_codes(request.GET["category"].split('_'))
+        items = Item.get_with_category_codes(request.GET["category"].split('_'), items)
     
     # price filter feature
     # ex: ?price=10-30 means filter all items with price between 10 until 30 dollars

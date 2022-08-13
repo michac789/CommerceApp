@@ -7,11 +7,15 @@
     
 {% block script %}
     <script src="{% static 'cart/index.js' %}" type="module"></script>
-
+    <link rel="stylesheet" href="{% static 'cart/index.css' %}">
 {% endblock script %}
 
 {% block body %}
-    <link rel="stylesheet" href="{% static 'cart/index.css' %}">
+    {% if error %}
+        <div class="container alert alert-danger">
+            {{ error }}
+        </div>
+    {% endif %}
 
     <div class="auth-indicator" data-auth="true"></div>
     <div class="container d-flex align-items-center justify-content-center py-5 cart-container-wrapper">
@@ -23,8 +27,9 @@
         </div>
     </div>
     <div class="container d-flex justify-content-center">
-        <a href="/">
-            Buy - TODO
-        </a>
+        <form action="{% url 'cart:buy' %}" method="POST">
+            {% csrf_token %}
+            <button type="submit">buy</button>
+        </form>
     </div>
 {% endblock body %}

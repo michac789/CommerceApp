@@ -5,6 +5,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from sso.models import User
 from django.core.serializers import serialize
 from json import loads
+from datetime import datetime
 
 
 class Seller(models.Model):
@@ -53,6 +54,7 @@ class Item(models.Model):
     time = models.DateTimeField(auto_now=True)
     seller = models.ForeignKey(User, on_delete=models.CASCADE, related_name="items_sold")
     buyer = models.ForeignKey(User, on_delete=models.CASCADE, related_name="items_bought", blank=True, null=True, default=None)
+    sold_time = models.DateTimeField(blank=True, null=True)
     ordereditem = models.ForeignKey("catalog.ItemOrdered", on_delete=models.PROTECT, editable=False, blank=True, null=True)
     closed = models.BooleanField(default=False)
     
@@ -64,11 +66,12 @@ class Item(models.Model):
         order_with_respect_to = 'ordereditem'
     
     @classmethod
-    def get_with_category_codes(self, codes):
+    def get_with_category_codes(self, codes, items=None):
+        if items == None: items = self.objects
         args, q = [], models.Q()
         for code in codes: args.append(Category.objects.get(code=code).id)
         for arg in args: q |= models.Q(category = arg)
-        return self.objects.filter(q)
+        return items.filter(q)
     
     @classmethod
     def sort(self, sortkey, items=None):
@@ -86,8 +89,11 @@ class Item(models.Model):
                 raise ObjectDoesNotExist("Invalid item id!")
             if item.closed == True:
                 raise Exception("Item closed!")
+        for item_id in item_ids:
+            item = Item.objects.get(id = item_id)
             item.closed = True
             item.buyer = user
+            item.sold_time = datetime.now()
             item.save()
         return True
         
