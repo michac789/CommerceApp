@@ -41,22 +41,24 @@
         <div class="catalog-container">
             {% for item in pagination.object_list %}
                     <a href="{% url 'catalog:item' item_id=item.id %}"> 
-                        <div class="card"> 
+                        <div class="card my-2"> 
                             <div>
                                 <img src="{{ item.image }}" class="card-img-top" alt="product-photo"> 
                             </div>
                             <!-- alt need to be outputted dynamically (using image name perhaps)  -->
-                            <div class="card-body">
-                                <h1 class="lead fw-100">S$ {{ item.price }}</h1>
+                            <div class="card-body"> 
                                 <hr>
-                                <h5 class="card-title text-truncate">
-                                    {{ item.title }}
+                                <h1 class="lead fw-100">S$ {{ item.price }}</h1>
+                                    <div class="d-flex align-items-center justify-content-center">
+                                    <h5 class="card-title text-truncate">
+                                        {{ item.title }}
+                                    </h5> 
                                     <button class="btn bookmark-btn bookmark-{{ item.id }}" data-item-id="{{ item.id }}">
                                         <!-- Placeholder for bookmark icon -->
                                     </button>
-                                </h5> 
-                                <!-- <small> Condition:  
-                                </small> -->
+                                    <!-- <small> Condition:  
+                                    </small> -->
+                                </div>
                             </div>
                         </div>
                     </a>

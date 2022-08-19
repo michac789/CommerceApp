@@ -21,24 +21,18 @@ div.catalog-container {
     justify-content: center; 
     align-items: center;
     column-gap: 10px;
+    row-gap: 10px; 
 }
 
-
-
-div.catalog-container li { 
-    width: 30vw;
-    margin: 2.5vw 0;
-}
 
 div.card { 
-    width: max(20vw, 270px); 
-    margin: 20px 0;  
-    height: max(340px, 30vh);
+    width: max(20vw, 270px);  
+    
 } 
 
 
 div.card img { 
-    width: 90%;
+    width: 80%;
     height: max(220px, 20vw);  
     border: none;
 

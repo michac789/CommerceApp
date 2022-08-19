@@ -34,7 +34,7 @@
             {% for item in items %}
             
                 <a href="{% url 'catalog:item' item_id=item.id %}"> 
-                    <div class="card"> 
+                    <div class="card my-2"> 
                         <div>
                             <img src="{{ item.image }}" class="card-img-top" alt="product-photo"> 
                         </div>
