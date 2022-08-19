@@ -1,7 +1,8 @@
 from django.urls import path
-from . import views
+from .views import ViewCart, Buy
 
 app_name = "cart"
 urlpatterns = [
-    path("", views.cart, name="main"),
+    path("", ViewCart.as_view(), name="main"),
+    path("buy", Buy.as_view(), name="buy"),
 ]

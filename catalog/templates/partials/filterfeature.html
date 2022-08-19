@@ -1,0 +1,29 @@
+<div>
+    FILTER FEATURE TODOO
+    
+    currently, you can see the categories under http://127.0.0.1:8000/admin/myshop/category/
+    (admin only)
+    
+    Please be aware of the category code and refer to views.py on how to implement that!
+    For filtering of price and time, refer to views.py for the example or see some test cases in test.py
+    <br>
+    <span class="fs-5 me-2">
+        Filter:
+    </span>
+    TODOOOO
+
+    {% if request.user.is_authenticated %}
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="bookmark" id="bookmark"
+            {% if request.GET.bookmarked %}checked{% endif %}>
+            <label class="form-check-label" for="bookmark">
+                Display Bookmarked Items Only
+            </label>
+        </div>
+    {% else %}
+        <div class="alert alert-warning">
+            Please login to bookmark item and and view all your bookmarked items only!
+        </div>
+    {% endif %}
+
+</div>

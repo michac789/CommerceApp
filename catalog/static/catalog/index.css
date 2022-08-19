@@ -47,3 +47,7 @@ div.card img {
 div.card div {
     text-align: center;
 }
+
+.nowrap {
+    white-space: nowrap;
+}

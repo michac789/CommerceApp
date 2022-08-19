@@ -1,0 +1,19 @@
+<span class="fw-normal">Items per page:</span>
+<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+    {% if request.GET.num %}
+        {{ request.GET.num }}
+    {% else %}
+        10
+    {% endif %}
+</button>
+<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+    {% with '2 4 6 10 20' as list %}
+        {% for i in list.split %}
+            <li>
+                <a class="dropdown-item" href="{% include 'partials/link.html' with props_num=i %}">
+                    {{ i }}
+                </a>
+            </li>
+        {% endfor %}
+    {% endwith %}
+</ul>

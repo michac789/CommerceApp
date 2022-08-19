@@ -5,7 +5,6 @@ from commerceapp.settings import LOGIN_URL
 
 from cart.models import Bookmark, Cart
 from myshop.models import Item
-from sso.models import User
 
 
 def test(_):

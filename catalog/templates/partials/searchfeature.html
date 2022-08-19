@@ -1,0 +1,25 @@
+<div id="root"></div>
+<script type="text/babel">
+    function App() {
+        const [query, setQuery] = React.useState("{{ request.GET.search }}")
+        
+        const search = (query) => {
+            const tmp = window.location.href.split(`search=`)
+            const tmp2 = tmp[1] ? tmp[1].split("&") : [""]
+            window.location.href = (tmp[0] + (tmp[0].includes("?") ? "" : "?") +
+                `search=${query}&` + (tmp2[1] ? tmp2[1] : ""))
+        }
+
+        return (
+            <div class="d-flex mb-2">
+                <span class="fs-5 me-2">Search:</span>
+                <input class="form-control w-50" type="text"
+                    value={query} onChange={e => setQuery(e.target.value)}/>
+                <button class="btn btn-dark ms-2" onClick={() => search(query)}>
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
+        )
+    }
+    ReactDOM.render(<App />, document.querySelector("#root"));
+</script>
