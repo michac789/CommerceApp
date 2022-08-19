@@ -1,9 +1,11 @@
 from django.db import models
 from django.db.models.functions import Lower
 from django.core.validators import MinValueValidator
+from django.core.exceptions import ObjectDoesNotExist
 from sso.models import User
 from django.core.serializers import serialize
 from json import loads
+from datetime import datetime
 
 
 class Seller(models.Model):
@@ -52,6 +54,7 @@ class Item(models.Model):
     time = models.DateTimeField(auto_now=True)
     seller = models.ForeignKey(User, on_delete=models.CASCADE, related_name="items_sold")
     buyer = models.ForeignKey(User, on_delete=models.CASCADE, related_name="items_bought", blank=True, null=True, default=None)
+    sold_time = models.DateTimeField(blank=True, null=True)
     ordereditem = models.ForeignKey("catalog.ItemOrdered", on_delete=models.PROTECT, editable=False, blank=True, null=True)
     closed = models.BooleanField(default=False)
     
@@ -63,11 +66,12 @@ class Item(models.Model):
         order_with_respect_to = 'ordereditem'
     
     @classmethod
-    def get_with_category_codes(self, codes):
+    def get_with_category_codes(self, codes, items=None):
+        if items == None: items = self.objects
         args, q = [], models.Q()
         for code in codes: args.append(Category.objects.get(code=code).id)
         for arg in args: q |= models.Q(category = arg)
-        return self.objects.filter(q)
+        return items.filter(q)
     
     @classmethod
     def sort(self, sortkey, items=None):
@@ -77,11 +81,21 @@ class Item(models.Model):
             queryset.order_by(Lower(sortkey[3:]).desc()))
     
     @classmethod
-    def buy(self, item_id, user):
-        item = Item.objects.get(id = item_id)
-        item.closed = True
-        item.buyer = user
-        item.save()
+    def buy(self, item_ids, user):
+        for item_id in item_ids:
+            try:
+                item = Item.objects.get(id = item_id)
+            except Item.DoesNotExist:
+                raise ObjectDoesNotExist("Invalid item id!")
+            if item.closed == True:
+                raise Exception("Item closed!")
+        for item_id in item_ids:
+            item = Item.objects.get(id = item_id)
+            item.closed = True
+            item.buyer = user
+            item.sold_time = datetime.now()
+            item.save()
+        return True
         
     def __str__(self):
         return f"<Item ID {self.id}: {self.title}>"

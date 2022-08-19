@@ -7,13 +7,37 @@
 
 {% block script %}
     <script src="{% static 'catalog/index.js' %}" type="module"></script>
-
+    <script src="https://unpkg.com/react@17/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 {% endblock script %}
 
 {% block body %}
     <!-- CATALOG INDEX PAGE - TODO  -->
     <link rel="stylesheet" href="{% static 'catalog/index.css' %}">
     <div class="container-fluid">
+        <div class="container">
+            <div class="accordion" id="accordionExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            Advanced options
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            {% include 'partials/searchfeature.html' %}
+                            {% include 'partials/sortfeature.html' %}
+                            {% include 'partials/filterfeature.html' %}
+                            <div class="mt-2">
+                                {% include 'partials/resetfeature.html' %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="catalog-container">
             {% for item in pagination.object_list %}
                     <a href="{% url 'catalog:item' item_id=item.id %}"> 
@@ -48,35 +72,15 @@
             {% endfor %}  
 
         </div>
+
+        <aside class="pagination d-flex align-items-center justify-content-center mt-5" data-pagination-number="{{ pagination.paginator.num_pages }}">
+            <section class="pagination mt-3">
+                {% include 'partials/pagination.html' %}
+            </section>
+            <section class="dropdown ms-3 mt-3">
+                {% include 'partials/itemsperpage.html' %}
+            </section>
+        </aside>
         
-        <nav aria-label="Page navigation">
-            <!-- I am using JS since using Django not too familiar -->
-            <ul class="pagination d-flex align-items-center justify-content-center mt-5" data-pagination-number="{{ pagination.paginator.num_pages }}">
-              <!-- <li class="page-item">
-                <a class="page-link" href="#" aria-label="Previous">
-                  <span aria-hidden="true">&laquo;</span>
-                </a>
-              </li> --> 
-              
-              <!-- <li class="page-item">
-                <a class="page-link" href="#" aria-label="Next">
-                  <span aria-hidden="true">&raquo;</span>
-                </a>
-              </li> -->
-            </ul>
-          </nav> 
-    {% comment %}
-        <div class="container">
-            <span class="h1">PAGINATION TODO</span><br>
-            <span class="h3">Try: ?num=4&#38;page=2 means:</span><br>
-            <span class="h3">paginate 4 per page, go to page 2</span><br>
-            <span class="h3">If you don't specify num, by default it's 10 per page</span><br>
-            <span class="h3">You may need these information for frontend pagination:</span><br>
-            Current Page: {{ pagination.number }} <br>
-            Total Pages: {{ pagination.paginator.num_pages }} <br>
-            Next Page: {{ pagination.has_next }} -> this is true if there is still next page <br>
-            Prev Page: {{ pagination.has_previous }} -> this is true if there is still prev page <br>
-        </div>
-    {% endcomment %}
     </div>
 {% endblock body %}

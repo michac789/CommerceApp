@@ -7,46 +7,29 @@
     
 {% block script %}
     <script src="{% static 'cart/index.js' %}" type="module"></script>
-
+    <link rel="stylesheet" href="{% static 'cart/index.css' %}">
 {% endblock script %}
 
 {% block body %}
-    <link rel="stylesheet" href="{% static 'cart/index.css' %}">
-    <!-- MY CART - TODO -->
-    <!-- use js fetch here to retrieve information... -->
-    <!-- <div class="container">
-        <div class="h1">API Temporary Mini Documentation</div>
-        <div class="font-weight-normal">
-            <span class="h3">/api/bookmark/(id)</span><br>
-            <b>GET:</b><br>
-            gets all of your bookmarked items (item_id does not matter)<br>
-            returns serialized version of that item to be put on DOM <br>
-            <b>PUT:</b><br>
-            bookmark that item <br>
-            <b>DELETE:</b><br>
-            remove bookmark from that item <br>
-        </div><br>
-        <div class="font-weight-normal">
-            <span class="h3">/api/cart/(id)</span><br>
-            <b>GET:</b><br>
-            gets all of your items on cart (item_id does not matter)<br>
-            returns serialized version of that item to be put on DOM <br>
-            <b>PUT:</b><br>
-            add item on cart (cannot add your on sale item or closed item)<br>
-            <b>DELETE:</b><br>
-            remove item from cart <br>
+    {% if error %}
+        <div class="container alert alert-danger">
+            {{ error }}
         </div>
-    </div>  -->
-        <div class="auth-indicator" data-auth="true"></div>
-        <div class="container d-flex align-items-center justify-content-center py-5 cart-container-wrapper">
-            <div class="col-md-5 col-lg-4 cart-container">
-                <h4 class="d-flex justify-content-center align-items-center mb-3 item-counter-wrapper">
-                </h4>
-                <ul class="list-group cart-list mb-3 cart">
-                </ul>
-            </div>
+    {% endif %}
+
+    <div class="auth-indicator" data-auth="true"></div>
+    <div class="container d-flex align-items-center justify-content-center py-5 cart-container-wrapper">
+        <div class="col-md-5 col-lg-4 cart-container">
+            <h4 class="d-flex justify-content-center align-items-center mb-3 item-counter-wrapper">
+            </h4>
+            <ul class="list-group cart-list mb-3 cart">
+            </ul>
         </div>
-        <div class="container">
-    
+    </div>
+    <div class="container d-flex justify-content-center">
+        <form action="{% url 'cart:buy' %}" method="POST">
+            {% csrf_token %}
+            <button type="submit">buy</button>
+        </form>
     </div>
 {% endblock body %}

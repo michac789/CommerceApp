@@ -1,5 +1,6 @@
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from myshop.models import Item
+from cart.models import Bookmark
 
 
 # function to create dynamic pagination
@@ -37,3 +38,10 @@ def search(request, items=Item.objects.all()):
             if query.upper() in item.title.upper() and item.id not in search_results:
                 search_results.append(item.id)
     return Item.objects.filter(id__in = search_results)
+
+
+# return a queryset that is all items bookmarked by the user
+def bookmark(request, items=Item.objects.all()):
+    bookmarks = Bookmark.objects.filter(user = request.user)
+    items_id = [bm.item.id for bm in bookmarks]
+    return items.filter(id__in=items_id)

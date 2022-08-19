@@ -1,6 +1,7 @@
 from django.http import Http404
 from django.db.models import Q
 from django.core.exceptions import FieldError
+from django.views.generic.base import TemplateView
 from django.shortcuts import render
 from datetime import datetime as dt, timedelta as td
 
@@ -13,12 +14,13 @@ def main(request):
 
 
 def index(request):
-    items = ""
+    # only display items still on sale in catalog
+    items = Item.onsale.all()
 
     # category filter feature
     # ex: ?category=EL_HI means filter items that has those 2 category codes
     if "category" in request.GET:
-        items = Item.get_with_category_codes(request.GET["category"].split('_'))
+        items = Item.get_with_category_codes(request.GET["category"].split('_'), items)
     
     # price filter feature
     # ex: ?price=10-30 means filter all items with price between 10 until 30 dollars
@@ -48,6 +50,11 @@ def index(request):
         try: items = (Item.sort(request.GET["sort"]) if items == "" else
                       Item.sort(request.GET["sort"], items))
         except FieldError: pass
+        
+    # get bookmarked item feature (for logged in users only)
+    if "bookmarked" in request.GET and not request.user.is_anonymous:
+        items = (util.bookmark(request) if items == "" else
+            util.bookmark(request, items))
     
     # pagination feature
     # ex: ?num=5&page=1 means paginate 5 per page, open page 1
@@ -72,3 +79,7 @@ def item(request, item_id):
         "status": item.getstatus(request.user),
         "notloggedin": request.user.is_anonymous
     })
+    
+
+class About(TemplateView):
+    template_name = "catalog/about.html"
