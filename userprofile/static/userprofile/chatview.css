@@ -1,4 +1,13 @@
 .chatbox-container { 
     height: 60vh; 
     width: max(300px, 50vw);
+} 
+
+#root { 
+    overflow-y: scroll; 
+}
+ 
+/* kinda not preferring to have scrollbar there */
+::-webkit-scrollbar {
+    display: none;
 }
