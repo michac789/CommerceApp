@@ -27,9 +27,8 @@
         </div>
     </div>
     <div class="container d-flex justify-content-center">
-        <form action="{% url 'cart:buy' %}" method="POST">
-            {% csrf_token %}
-            <button type="submit">buy</button>
+        <form class="buy-form" action="{% url 'cart:buy' %}" method="POST">
+            {% csrf_token %} 
         </form>
     </div>
 {% endblock body %}

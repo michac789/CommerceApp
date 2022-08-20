@@ -20,19 +20,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 sum += parseFloat(item.item_price)
                 cartReference.innerHTML +=
                     `<li class="list-group-item d-flex justify-content-between lh-sm cart-item-${item.item_id}" data-price="${item.item_price}">
-                    <div>
-                        <h6 class="my-0">
-                            <a class="text-secondary" href="../catalog/${item.item_id}">
-                                ${item.item_title}
-                            </a>
+                        <div class="d-inline-block">
+                            <h6 class="my-0">
+                                <a class="text-secondary" href="../catalog/${item.item_id}">
+                                    ${ item.item_title }
+                                </a>
+                                <button data-item-id="${item.item_id}" class="remove-cart-${item.item_id}-btn btn remove-btn"><i class="bi bi-trash"></i></button>
 
-                            <button data-item-id="${item.item_id}" class="remove-cart-${item.item_id}-btn btn remove-btn"><i class="bi bi-trash"></i></button>
-                        </h6> 
-                        <small class="text-muted"></small> 
-                    </div>
+                            </h6> 
+
+                            <small class="text-muted"></small> 
+                        </div>
 
                     <span class="text-muted price"> $${Number (parseFloat(item.item_price)).toFixed(1)} </span>
-                    </li>`
+                    </li>` 
                   
             }
             ) 
@@ -44,6 +45,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     <span class="d-inline-block sum text-muted">$${sum}</span> 
                 </div>
             </li>`
+            const buyFormReference = document.querySelector('.buy-form')  
+            console.log(buyFormReference)
+            buyFormReference.innerHTML = `<button type="submit" class="btn btn-secondary">Buy</button>`
+
 
             
             const itemID = document.querySelectorAll('button.remove-btn').forEach((button) => {
@@ -80,3 +85,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // 
 //                 
+
