@@ -26,10 +26,10 @@
     {% tz_detect %}
     <body>
         <!-- TODO - sso/templates/layout/root.html : show whether user has logged in or not /// -->
-        <div style="height: 20px;"></div>
         <div class="container pt-3">
             {% if user.is_authenticated %}
-                <!-- <h1>Welcome back, <span class="fw-700 text-secondary">{{ user.username }}!</span></h1> -->
+                <div style="height: 20px;"></div>
+                <h4>Welcome back, <a href="/profile/view/{{ user.username }}" class="fw-700 text-secondary">{{ user.username }}!</a></h4>
                 
             {% else %}
                 <!-- Not logged in -->

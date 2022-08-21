@@ -1,5 +1,5 @@
 <div>
-    FILTER FEATURE TODOO
+    <!-- FILTER FEATURE TODOO
     
     currently, you can see the categories under http://127.0.0.1:8000/admin/myshop/category/
     (admin only)
@@ -10,20 +10,93 @@
     <span class="fs-5 me-2">
         Filter:
     </span>
-    TODOOOO
+    TODO -->
+    
+    <span class="fs-5 me-2">Filter by: </span> <br>
+    <u class="fe-6 my-2 d-inline-block">Category</u> <br>
+    <div class="form-check"> 
+        
+        <input class="form-check-input" type="checkbox" id="flexCheckClothing">
+        <label class="form-check-label" for="flexCheckClothing">
+            Clothing
+        </label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="flexCheckEducation">
+        <label class="form-check-label" for="flexCheckEducation">
+            Education
+        </label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="flexCheckSports">
+        <label class="form-check-label" for="flexCheckSports">
+            Sports
+        </label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="flexCheckElectronics">
+        <label class="form-check-label" for="flexCheckElectronics">
+            Electronics
+        </label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="flexCheckHouseholdItems">
+        <label class="form-check-label" for="flexCheckHouseholdItems">
+            Household Items
+        </label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="flexCheckOthers">
+        <label class="form-check-label" for="flexCheckOthers">
+            Others
+        </label>
+    </div>
+    <u class="fe-6 d-inline-block my-1">Price range</u> <br> 
+    <form class="price-range-form">
+        <div class="input-group mb-1 d-inline-block" style="width: 100px;">
+            <input id="min-price" type="text" class="form-control text-center" style="width: 100px;" placeholder="$MIN" aria-label="MIN" required> 
+        </div>
+        <h1 class="d-inline-block mx-3">   -   </h1>
+        <div class="input-group mb-1 me-2 d-inline-block" style="width: 100px;"> 
+            <input id="max-price" type="text" class="form-control text-center" style="width: 100px;" placeholder="$MAX" aria-label="MAX" required> 
+        </div>
+        <button class="btn btn-secondary" type="submit">Filter</button><br> 
+    </form>
+
+    <u class="fe-6 d-inline-block mb-1">Time</u>
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioWeek">
+        <label class="form-check-label" for="flexRadioWeek">
+            This week 
+        </label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioMonth">
+        <label class="form-check-label" for="flexRadioMonth">
+            This month
+        </label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioYear">
+        <label class="form-check-label" for="flexRadioYear">
+            This year
+        </label> 
+    </div>
+    <hr>
 
     {% if request.user.is_authenticated %}
         <div class="form-check">
             <input class="form-check-input" type="checkbox" value="bookmark" id="bookmark"
-            {% if request.GET.bookmarked %}checked{% endif %}>
+            {% if request.GET.bookmarked %} checked {% endif %}>
             <label class="form-check-label" for="bookmark">
                 Display Bookmarked Items Only
             </label>
         </div>
     {% else %}
-        <div class="alert alert-warning">
+        <div class="mt-2 alert alert-warning">
             Please login to bookmark item and and view all your bookmarked items only!
         </div>
-    {% endif %}
+    {% endif %} 
+    
 
 </div>
