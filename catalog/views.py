@@ -19,6 +19,7 @@ def index(request):
 
     # category filter feature
     # ex: ?category=EL_HI means filter items that has those 2 category codes
+    # FIRST TWO WORDS IS FOR EACH CATEGORY
     if "category" in request.GET:
         items = Item.get_with_category_codes(request.GET["category"].split('_'), items)
     
